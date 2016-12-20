@@ -6,6 +6,12 @@
 Création d'une application web pour rechercher des produits alimentaire sur l'API Open Food Facts.
 Finalisation de la liste de courses et envoi via sms ou sur wunderlist
 
+Créé avec React [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
+
+
+# Installation
+
+
 ## API utilisées
 
 [Wunderlist](developer.wunderlist.com)
