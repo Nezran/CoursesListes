@@ -11,6 +11,23 @@ Créé avec React [![Build Status](https://travis-ci.org/facebookincubator/creat
 
 # Installation
 
+**Requis : ** Node js installé
+
+```
+git clone https://github.com/Nezran/CoursesListes
+```
+
+Puis
+
+```
+npm install
+``` 
+
+Démarrer le projet 
+
+```
+npm start
+``` 
 
 ## API utilisées
 
