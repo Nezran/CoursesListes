@@ -23,8 +23,8 @@ class App extends Component {
     }
 
     handleSubmit(event) {
-        this.GetProducts(event.target.value);
         event.preventDefault();
+        this.GetProducts();
     }
 
     handleChange(event) {
@@ -33,24 +33,26 @@ class App extends Component {
 
     GetProducts() {
         //ReactDOM.render(console.log(search), document.getElementById('debug'));
-        return $.getJSON('https://ssl-api.openfoodfacts.org/cgi/search.pl?search_terms=' + this.state.search + '&search_simple=1&action=process&json=1')
+
+        return $.getJSON('https://ssl-api.openfoodfacts.org/cgi/search.pl?search_terms=' + this.state.search + '&search_simple=1&action=process&json=1&page=20&page_size=20')
             .then((data) => {
                 console.log("callback de l'api", data);
                 this.setState({products: data.products, total: data.count});
             });
+    }
 
+    renderItems(){
+        return this.state.products.map((item,i) =>{
+            return (
+                <span className="items">
+                    <p key={'produit-' + i}>{item.product_name_fr ? item.product_name_fr : 'Produit sans nom'}</p>
+                    <img src={item.image_front_small_url}/>
+                </span>
+            )
+        });
     }
 
     render() {
-        const items = this.state.products.map((item, i) => {
-
-            return <span className="items">
-            <p key={'produit-' + i}>{item.product_name_fr ? item.product_name_fr : 'Produit sans nom'}</p>
-
-            <img src={item.image_front_small_url}/>
-        </span>
-
-        });
         return (
             <div className="App">
                 <div className="App-header">
@@ -71,7 +73,7 @@ class App extends Component {
                     <cite>Total : {this.state.total} produits</cite>
                     <hr />
                 </div>
-                <div>{items}</div>
+                <div>{this.renderItems()}</div>
             </div>
         );
     }
