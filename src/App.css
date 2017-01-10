@@ -34,6 +34,18 @@ div{
   background: rgb(221, 221, 221);
   margin: 0 2px 0 2px;
   border-radius: 2px;
+
+}
+.pagination:hover{
+  cursor: pointer;
+  background: rgb(188, 188, 188);
+}
+.paginationNoClick{
+  padding: 2px 4px 2px 4px;
+  color: rgb(221, 221, 221);
+  background: black;
+  margin: 0 2px 0 2px;
+  border-radius: 2px;
 }
 span.items img{
   max-width: 100%;

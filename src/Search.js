@@ -5,21 +5,22 @@
 var React = require('react');
 
 var Search = React.createClass({
-    handleChange: function(e){
-        var name = e.target.value;
-        this.props.onChange(name);
-    },
+    // handleChange: function(e){
+    //     var name = e.target.value;
+    //     this.props.onChange(name);
+    // },
     handleSubmit: function(e){
         e.preventDefault();
-        console.log("wsw");
-        this.props.onSubmit();
+        // console.log(document.getElementsByName('search')[0].value);
+        this.props.onSubmit(document.getElementsByName('search')[0].value);
     },
     render: function () {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
                     <p>Chercher un produit par son nom</p>
-                    <input name="search" minLength="3" type="text" required onChange={this.handleChange}/>
+                    {/*onChange={this.handleChange}*/}
+                    <input name="search" minLength="3" type="text" required ref="search"/>
                 </label>
                 <input type="submit" value="Submit"/>
             </form>
