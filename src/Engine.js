@@ -8,7 +8,7 @@ var $ = require('jquery');
 var Paging = require('./Paging');
 var RenderProducts = require('./RenderProducts');
 var Country = require('./Country');
-
+require('./App.css');
 var Engine = React.createClass({
     propTypes:{
       page : React.PropTypes.number,
@@ -129,7 +129,7 @@ var Engine = React.createClass({
                   {/*<GetProducts search={this.state.search} onLoad={this.handleLoad}/>*/}
                   <Search onSubmit={this.handleSearchSubmit} />
                   <div>{this.renderStores()}</div>
-                  <Country onChange={this.handleCountryChange}/>
+                  <Country onChange={this.handleCountryChange} country={this.state.country}/>
                   <button type="button" onClick={this.handleReset}>Réinitialiser</button>
                   <Paging page={this.state.pages} total={this.state.total} productsPerPage={this.state.productsPerPage} onSubmit={this.handlePagingSubmit} />
               </div>
