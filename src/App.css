@@ -1,7 +1,13 @@
 .App {
   text-align: center;
 }
+* {
 
+  box-sizing: border-box;
+}
+html{
+  background-color: #30B236;
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
@@ -22,12 +28,62 @@ div{
   font-size: large;
 }
 
-.items{
-  float: left;
-  width: calc(25% - 12px);
-  border: 1px solid #eae9e9;
-  margin: 5px;
+.products{
+    padding: 10px;
+  min-height: 600px;
+  /*float: left;*/
+  /*width: calc(25% - 12px);*/
+  border: 1px solid whitesmoke;
+  /*margin: 5px;*/
   border-radius: 7px;
+    background-color: whitesmoke;
+}
+
+.items img{
+    /*max-width: 30px;*/
+}
+/*  SECTIONS  */
+.section {
+  clear: both;
+  padding: 0px;
+  margin: 0px;
+}
+
+/*  COLUMN SETUP  */
+.col {
+  display: block;
+  float:left;
+  margin: 1% 0 1% 1.6%;
+}
+.col:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+/*  GRID OF FIVE  */
+.span_5_of_5 {
+  width: 100%;
+}
+.span_4_of_5 {
+  width: 79.68%;
+}
+
+.span_3_of_5 {
+  width: 59.36%;
+}
+.span_2_of_5 {
+  width: 39.04%;
+}
+.span_1_of_5 {
+  width: 18.72%;
+}
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+@media only screen and (max-width: 480px) {
+  .col {  margin: 1% 0 1% 0%; }
+  .span_1_of_5, .span_2_of_5, .span_3_of_5, .span_4_of_5, .span_5_of_5 { width: 100%; }
 }
 .pagination{
   padding: 2px 4px 2px 4px;
@@ -49,6 +105,11 @@ div{
 }
 span.items img{
   max-width: 100%;
+}
+
+.header {
+  margin: 0 auto;
+  text-align: center;
 }
 
 @keyframes App-logo-spin {

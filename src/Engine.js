@@ -6,7 +6,8 @@ var React = require('react');
 var Search = require('./Search');
 var $ = require('jquery');
 var Paging = require('./Paging');
-
+var RenderProducts = require('./RenderProducts');
+var Country = require('./Country');
 
 var Engine = React.createClass({
     propTypes:{
@@ -18,11 +19,15 @@ var Engine = React.createClass({
             total: 0,
             search: '',
             pages: 1,
-            productsPerPage: 20
+            productsPerPage: 20,
+            storeChoose: '*',
+            stores: [],
+            country: 'switzerland',
         }
     },
     componentDidMount: function() {
-        this.loadData(this.state.search,1,this.state.productsPerPage);
+        this.loadData(this.state.search,1,this.state.productsPerPage,this.state.storeChoose);
+        // this.loadStore();
     },
     handleChange(string) {
         this.setState({search: string, pages:1});
@@ -34,17 +39,49 @@ var Engine = React.createClass({
     //     this.setState({pages:page});
     // },
     handleSearchSubmit(search){
-        this.loadData(search,1,this.state.productsPerPage);
+        this.setState({pages: 1});
+        this.loadData(search,1,this.state.productsPerPage,this.state.storeChoose);
     },
     handlePagingSubmit(page){
         console.log("tu recoi ? "+page);
-        this.loadData(this.state.search, page, this.state.productsPerPage);
+        this.setState({pages: page});
+        this.loadData(this.state.search, page, this.state.productsPerPage,this.state.storeChoose);
     },
-    loadData(search, page, productsPerPage){
+    handleStoreChange(string){
+        var store = string.target.value;
+        this.setState({pages: 1});
+        // this.setState({storeChoose: string.target.value});
+        this.setState({storeChoose: store}, function(){
+            console.log("CALLBACK ?",this.state.storeChoose === store); // true
+            if(this.state.storeChoose === store){
+                this.loadData(this.state.search, this.state.pages, this.state.productsPerPage, this.state.storeChoose);
+            }
+        }.bind(this));
+    },
+    handleCountryChange(country){
+        this.setState({country: country}, function(){
+            if(this.state.country === country) {
+                this.loadData(this.state.search, this.state.pages, this.state.productsPerPage, this.state.storeChoose);
+            }
+        }.bind(this));
+    },
+    // handleStoreSubmit(event){
+    //     event.preventDefault();
+    //     this.loadData(this.state.search, this.state.pages, this.state.productsPerPage, this.state.storeChoose);
+    // },
+    handleReset(event){
+        event.preventDefault();
+        // this.replaceState(this.getInitialState());
+        this.setState(this.getInitialState());
+    },
+    loadData(search, page, productsPerPage, storeChoose){
         return $.getJSON(
-            'https://ssl-api.openfoodfacts.org/cgi/search.pl?search_terms='
+            'https://ssl-api.openfoodfacts.org/cgi/search.pl?' +
+            'action=process&search_terms='
             + search +
-            '&search_simple=1&action=process&json=1&page='
+            '&tagtype_0=countries&tag_contains_0=contains&tag_0='+ this.state.country +
+            '&tagtype_1=stores&tag_contains_1=contains&tag_1='+storeChoose+
+            '&search_simple=1&json=1&page='
             + page +
             '&page_size='
             + productsPerPage
@@ -56,25 +93,56 @@ var Engine = React.createClass({
                 // this.setState({products: data.products, total: data.count});
             });
     },
-    renderItems(){
-        return this.state.products.map((item,i) =>{
-            return (
-                <span className="items">
-                    <p key={'produit-' + i}>{item.product_name_fr ? item.product_name_fr : 'Produit sans nom'}</p>
-                    <img src={item.image_front_small_url} alt="image_product"/>
-                </span>
-            )
-        });
+    loadStore(){
+        return $.getJSON(
+            'https://world.openfoodfacts.org/stores.json')
+            .then((data) =>{
+            this.setState({stores: data});
+                console.log("callback des stores ", data);
+            }
+        );
+    },
+    renderStores(){
+           return (
+               <span>
+                   <form>
+                        <select value={this.state.storeChoose} onChange={this.handleStoreChange}>
+                            <option value="*">Tous</option>
+                            <option value="migros">Migros</option>
+                            <option value="denner">Denner</option>
+                            <option value="coop">Coop</option>
+                            <option value="intermarché">Intermarché</option>
+                            <option value="cora">Cora</option>
+                        </select>
+                        {/*<input type="submit" value="Submit"/>*/}
+                    </form>
+               </span>
+           )
     },
     render: function(){
         return (
           <div>
-              {console.log("produit"+this.state.products, "search"+ this.state.search, "Page " + this.state.pages)}
-              <h1>Courses Listes</h1>
-              {/*<GetProducts search={this.state.search} onLoad={this.handleLoad}/>*/}
-              <Search onSubmit={this.handleSearchSubmit} />
-              <Paging page={this.state.pages} total={this.state.total} productsPerPage={this.state.productsPerPage} onSubmit={this.handlePagingSubmit} />
-              <div>{this.renderItems()}</div>
+              {console.log("search"+ this.state.search, "Page " + this.state.pages)}
+              <div className="header">
+                  <h1>Courses Listes</h1>
+                  <i>Périmètre de la recherche : {this.state.country}</i>
+                  {/*<GetProducts search={this.state.search} onLoad={this.handleLoad}/>*/}
+                  <Search onSubmit={this.handleSearchSubmit} />
+                  <div>{this.renderStores()}</div>
+                  <Country onChange={this.handleCountryChange}/>
+                  <button type="button" onClick={this.handleReset}>Réinitialiser</button>
+                  <Paging page={this.state.pages} total={this.state.total} productsPerPage={this.state.productsPerPage} onSubmit={this.handlePagingSubmit} />
+              </div>
+
+              <div className="section group">
+              {
+                  this.state.products.map(function(item){
+                        return <RenderProducts products={item}/>;
+                      }
+                  )
+              }
+              </div>
+
           </div>
       );
     }

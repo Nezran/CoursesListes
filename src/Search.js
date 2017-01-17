@@ -20,7 +20,7 @@ var Search = React.createClass({
                 <label>
                     <p>Chercher un produit par son nom</p>
                     {/*onChange={this.handleChange}*/}
-                    <input name="search" minLength="3" type="text" required ref="search"/>
+                    <input name="search" type="text"  ref="search"/>
                 </label>
                 <input type="submit" value="Submit"/>
             </form>

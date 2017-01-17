@@ -67,6 +67,7 @@ var Paging = React.createClass({
                   <br/>
                   {pagination}
                   <p>Nombre de produits : {this.props.total}</p>
+                  <p>Nombre de produits par page : {this.props.productsPerPage}</p>
               </div>
           </div>
         );
