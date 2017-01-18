@@ -22,24 +22,27 @@ var RenderProducts = React.createClass({
                 <div className="col span_1_of_5 products">
                     <span className="l-box">
                     <p>{this.props.products.product_name_fr ? this.props.products.product_name_fr : 'Produit sans nom'}
-                        <i>{this.props.products.quantity}</i>
+                        <i> {this.props.products.quantity}</i>
                     </p>
-                    <img src={this.props.products.image_front_small_url ? this.props.products.image_front_small_url : "http://www.chipset-v.ru/img/nopic.png"} alt="image_product"/>
+                        <span className="product-image">
+                           <img className={this.props.products.image_front_small_url ? "" : "blank-image"} src={this.props.products.image_front_small_url ? this.props.products.image_front_small_url : "http://www.chipset-v.ru/img/nopic.png"} alt="image_product"/>
+                        </span>
                      <span>
+                         <p>Par {this.props.products.nutrition_data_per}</p>
                          <p>
-                             <img src={`https://static.openfoodfacts.org/images/misc/${this.props.products.nutrient_levels.fat}.svg`}/>
+                             <img alt="icon-nutriments" src={`https://static.openfoodfacts.org/images/misc/${this.props.products.nutrient_levels.fat}.svg`}/>
                              Matières grasses {this.props.products.nutriments.fat} {this.props.products.nutriments.fat_unit}
                          </p>
                          <p>
-                             <img src={`https://static.openfoodfacts.org/images/misc/${this.props.products.nutrient_levels['saturated-fat']}.svg`} />
+                             <img alt="icon-nutriments" src={`https://static.openfoodfacts.org/images/misc/${this.props.products.nutrient_levels['saturated-fat']}.svg`} />
                              Acides gras saturés {this.props.products.nutriments['saturated-fat']} {this.props.products.nutriments['saturated-fat_unit']}
                          </p>
                          <p>
-                             <img src={`https://static.openfoodfacts.org/images/misc/${this.props.products.nutrient_levels.sugars ? this.props.products.nutrient_levels.sugars : "low"}.svg`}/>
+                             <img alt="icon-nutriments" src={`https://static.openfoodfacts.org/images/misc/${this.props.products.nutrient_levels.sugars ? this.props.products.nutrient_levels.sugars : "low"}.svg`}/>
                              Sucre {this.props.products.nutriments.sugars ? this.props.products.nutriments.sugars : "0" } {this.props.products.nutriments.sugars_unit ? this.props.products.nutriments.sugars_unit : "g"}
                          </p>
                          <p>
-                             <img src={`https://static.openfoodfacts.org/images/misc/${this.props.products.nutrient_levels.salt ? this.props.products.nutrient_levels.salt : "low"}.svg`}/>
+                             <img alt="icon-nutriments" src={`https://static.openfoodfacts.org/images/misc/${this.props.products.nutrient_levels.salt ? this.props.products.nutrient_levels.salt : "low"}.svg`}/>
                              Sel {this.props.products.nutriments.salt ? this.props.products.nutriments.salt : "0"} {this.props.products.nutriments.salt_unit ? this.props.products.nutriments.salt_unit : "g"}
                          </p>
                      </span>

@@ -28,10 +28,8 @@ var Country = React.createClass({
         return (
             <div>
                 {console.log(this.state.countries)}
-                <select onChange={this.handleChange}>
-                    <option value="*">
-                       Tous
-                    </option>
+                <select onChange={this.handleChange} value={this.props.country}>
+
                     {
                         this.state.countries.map(function(item,index) {
                                 if (item.products > 400) {

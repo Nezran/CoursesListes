@@ -27,6 +27,14 @@ div{
 .App-intro {
   font-size: large;
 }
+.product-image img{
+    margin: 0 auto;
+    display: block;
+    max-width: 100%;
+}
+.product-image img.blank-image {
+    max-width: 100px;
+}
 
 .products{
     padding: 10px;

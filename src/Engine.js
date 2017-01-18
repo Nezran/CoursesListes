@@ -8,6 +8,8 @@ var $ = require('jquery');
 var Paging = require('./Paging');
 var RenderProducts = require('./RenderProducts');
 var Country = require('./Country');
+require('./App.css');
+
 
 var Engine = React.createClass({
     propTypes:{
@@ -26,6 +28,7 @@ var Engine = React.createClass({
         }
     },
     componentDidMount: function() {
+        this.loadWunderlist();
         this.loadData(this.state.search,1,this.state.productsPerPage,this.state.storeChoose);
         // this.loadStore();
     },
@@ -102,6 +105,40 @@ var Engine = React.createClass({
             }
         );
     },
+    loadWunderlist(){
+        // var wun = new Wunderlist({
+        //     'accessToken': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
+        //     'clientID': '5764457c678b01bd15f5'
+        // });
+        //
+        // wun.initialized.done(function () {
+        //     // Where handleListData and handleError are functions
+        //     // 'http' here can be replaced with 'socket' to use a WebSocket connection for all requests
+        //     wun.http.lists.all()
+        //     // handleListData will be called with the object parsed from the response JSON
+        //         .done()
+        //         // handleError will be called with the error/event
+        //         .fail();
+        // });
+        // console.log(wun);
+
+        // wun.http.lists.all()
+        //     .done(function (lists) {
+        //         console.log(lists);
+        //     })
+        //     .fail(function () {
+        //         console.error('there was a problem');
+        //     });
+        $.ajaxSetup({
+            headers : {
+                'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
+                'X-Client-ID': '5764457c678b01bd15f5',
+            }
+        });
+        $.getJSON('https://a.wunderlist.com/api/v1/lists/251762132', function(data) { alert("Success"); console.log("getWunderlist",data); });
+
+    },
+
     renderStores(){
            return (
                <span>
@@ -129,7 +166,7 @@ var Engine = React.createClass({
                   {/*<GetProducts search={this.state.search} onLoad={this.handleLoad}/>*/}
                   <Search onSubmit={this.handleSearchSubmit} />
                   <div>{this.renderStores()}</div>
-                  <Country onChange={this.handleCountryChange}/>
+                  <Country onChange={this.handleCountryChange} country={this.state.country}/>
                   <button type="button" onClick={this.handleReset}>Réinitialiser</button>
                   <Paging page={this.state.pages} total={this.state.total} productsPerPage={this.state.productsPerPage} onSubmit={this.handlePagingSubmit} />
               </div>
