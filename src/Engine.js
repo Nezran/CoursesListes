@@ -9,6 +9,21 @@ var Paging = require('./Paging');
 var RenderProducts = require('./RenderProducts');
 var Country = require('./Country');
 require('./App.css');
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+import FlatButton from 'material-ui/FlatButton';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {deepOrange500} from 'material-ui/styles/colors';
+import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import CircularProgress from 'material-ui/CircularProgress';
+import TextField from 'material-ui/TextField';
+var Loader = require('react-loaders').Loader;
+
 
 var Engine = React.createClass({
     propTypes:{
@@ -24,6 +39,8 @@ var Engine = React.createClass({
             storeChoose: '*',
             stores: [],
             country: 'switzerland',
+            value: "1",
+            loading: true,
         }
     },
     componentDidMount: function() {
@@ -77,23 +94,27 @@ var Engine = React.createClass({
         this.setState(this.getInitialState());
     },
     loadData(search, page, productsPerPage, storeChoose){
-        return $.getJSON(
-            'https://ssl-api.openfoodfacts.org/cgi/search.pl?' +
-            'action=process&search_terms='
-            + search +
-            '&tagtype_0=countries&tag_contains_0=contains&tag_0='+ this.state.country +
-            '&tagtype_1=stores&tag_contains_1=contains&tag_1='+storeChoose+
-            '&search_simple=1&json=1&page='
-            + page +
-            '&page_size='
-            + productsPerPage
-            + '')
-            .then((data) => {
-                // this.handleLoad(data);
-                this.setState({products: data.products, total: data.count, pages: data.page, search: search});
-                console.log("callback de l'api", data);
-                // this.setState({products: data.products, total: data.count});
-            });
+        this.setState({loading: true}, function(){
+            return $.getJSON(
+                'https://ssl-api.openfoodfacts.org/cgi/search.pl?' +
+                'action=process&search_terms='
+                + search +
+                '&tagtype_0=countries&tag_contains_0=contains&tag_0='+ this.state.country +
+                '&tagtype_1=stores&tag_contains_1=contains&tag_1='+storeChoose+
+                '&search_simple=1&json=1&page='
+                + page +
+                '&page_size='
+                + productsPerPage
+                + '')
+                .then((data) => {
+                    // this.handleLoad(data);
+                    this.setState({products: data.products, total: data.count, pages: data.page, search: search});
+                    console.log("callback de l'api", data);
+                    // this.setState({products: data.products, total: data.count});
+                    this.setState({loading: false});
+                });
+        });
+
     },
     loadStore(){
         return $.getJSON(
@@ -105,36 +126,14 @@ var Engine = React.createClass({
         );
     },
     loadWunderlist(){
-        // var wun = new Wunderlist({
-        //     'accessToken': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
-        //     'clientID': '5764457c678b01bd15f5'
-        // });
-        //
-        // wun.initialized.done(function () {
-        //     // Where handleListData and handleError are functions
-        //     // 'http' here can be replaced with 'socket' to use a WebSocket connection for all requests
-        //     wun.http.lists.all()
-        //     // handleListData will be called with the object parsed from the response JSON
-        //         .done()
-        //         // handleError will be called with the error/event
-        //         .fail();
-        // });
-        // console.log(wun);
 
-        // wun.http.lists.all()
-        //     .done(function (lists) {
-        //         console.log(lists);
-        //     })
-        //     .fail(function () {
-        //         console.error('there was a problem');
-        //     });
-        $.ajaxSetup({
-            headers : {
-                'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
-                'X-Client-ID': '5764457c678b01bd15f5',
-            }
-        });
-        $.getJSON('https://a.wunderlist.com/api/v1/lists/251762132', function(data) { alert("Success"); console.log("getWunderlist",data); });
+        // $.ajaxSetup({
+        //     headers : {
+        //         'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
+        //         'X-Client-ID': '5764457c678b01bd15f5',
+        //     }
+        // });
+        // $.getJSON('https://a.wunderlist.com/api/v1/lists/251762132', function(data) { alert("Success"); console.log("getWunderlist",data); });
 
     },
 
@@ -155,9 +154,45 @@ var Engine = React.createClass({
                </span>
            )
     },
+    handleRequestClose() {
+        this.setState({
+            open: false,
+        });
+    },
     render: function(){
+        const standardActions = (
+            <FlatButton
+                label="Ok"
+                primary={true}
+                onTouchTap={this.handleRequestClose}
+            />
+        );
+        const muiTheme = getMuiTheme({
+            palette: {
+                accent1Color: deepOrange500,
+            },
+        });
+        var styles = {
+            container: {
+                display: 'none'
+            },
+        };
+        function renderLoader() {
+            return <Loader type="line-scale" active="true" />
+        }
         return (
           <div>
+
+              <MuiThemeProvider muiTheme={muiTheme}>
+
+
+              <CircularProgress size={60} thickness={7} color="#ffffff" style={this.state.loading}/>
+
+
+
+
+              </MuiThemeProvider>
+
               {console.log("search"+ this.state.search, "Page " + this.state.pages)}
               <div className="header">
                   <h1>Courses Listes</h1>
