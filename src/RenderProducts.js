@@ -16,8 +16,8 @@ var RenderProducts = React.createClass({
                 this.props.products.nutriments['saturated-fat'] = 0;
                 this.props.products.nutriments['saturated-fat_unit'] = "g";
                 this.props.products.nutrient_levels['saturated-fat'] = "low";
-                console.log(this.props.products);
-                console.log("dsadasdas :", this.props.products.nutriments['saturated-fat_unit']);
+                // console.log(this.props.products);
+                // console.log("dsadasdas :", this.props.products.nutriments['saturated-fat_unit']);
             }
             return (
                 <div className="col span_1_of_5 products">

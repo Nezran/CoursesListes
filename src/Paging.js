@@ -3,6 +3,10 @@
  */
 
 var React = require('react');
+import RaisedButton from 'material-ui/RaisedButton';
+import {green800, green100} from 'material-ui/styles/colors';
+import ArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import ArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 
 var Paging = React.createClass({
     // getDefaultProps: function () {
@@ -32,38 +36,99 @@ var Paging = React.createClass({
 
         var pagination = [];
 
-        if(nbrPages > 10){
+        const styles = {
+            button: {
+                margin: 1,
+                width: "auto",
+                minWidth: "auto",
+                color: green800,
+                backgroundColor: green100,
+            },
+        };
+
             var page = 0;
             // console.log(typeof(page));
             page = page + Number(this.props.page);
             // console.log(typeof(page));
+
             var limitpage = 0;
-            limitpage = page + 5;
-            if(page <= 5){
+            if(nbrPages < 3){
+                limitpage = nbrPages;
+            }else{
+                limitpage = page + 3;
+
+            }
+
+            if(page <= 3){
                 page = 1;
             }else{
-              page = page - 5;
+                page = page - 3;
             }
-            console.log(typeof(page), typeof(limitpage));
+            // console.log(typeof(page), typeof(limitpage));
 
-            console.log("limit"+limitpage);
+            // console.log("limit"+page);
+
+
+            var pageprev = 0;
+            // pageprev = Number(page) - 1;
+            if((Number(this.props.page) - 1) < 1){
+                pageprev = 1;
+            }else{
+                pageprev = Number(this.props.page) - 1;
+            }
+            console.log("prev",pageprev);
+
+
+            var pagenext = 0;
+            if((Number(this.props.page) + 1) >= nbrPages){
+                pagenext = Number(nbrPages);
+            }else{
+                pagenext = Number(this.props.page) + 1;
+            }
+            console.log("next",pagenext);
+
+
+            // (Number(this.props.page) - 1) => 1 ? 2 : 1
+            pagination.push( <RaisedButton
+                icon={<ArrowLeft />}
+                style={styles.button}
+                fullWidth="false"
+                onClick={this.handleClick.bind(this, pageprev )}
+                disabled={limitpage == 1 ? true : false}
+
+            />);
             for (var i = page; i <= limitpage; i++) {
-                pagination.push(<span className={this.props.page != i ? 'pagination' : 'paginationNoClick'} onClick={this.handleClick.bind(this,  i)}>{i}</span>);
+                pagination.push(
+                    <RaisedButton
+                        style={styles.button}
+                        primary={true}
+                        fullWidth="false"
+                        label={i}
+                        onClick={this.handleClick.bind(this, i)}
+                        disabled={this.props.page != i ? false : true}
+                    />);
+                // pagination.push(<span className={this.props.page != i ? 'pagination' : 'paginationNoClick'} onClick={this.handleClick.bind(this,  i)}>{i}</span>);
             }
-            pagination.push(<span className='pagination'>...</span>);
-            pagination.push(<span className='pagination' onClick={this.handleClick.bind(this, nbrPages)}>{nbrPages}</span>);
+            // pagination.push(
+            //     <RaisedButton
+            //         style={styles.button}
+            //         fullWidth="false"
+            //         label={nbrPages}
+            //         onClick={this.handleClick.bind(this, nbrPages)}
+            //         disabled={this.props.page != i ? false : true}
+            //     />);
+            pagination.push( <RaisedButton
+                icon={<ArrowRight />}
+                style={styles.button}
+                fullWidth="false"
+                onClick={this.handleClick.bind(this, pagenext)}
+                disabled={(pagenext == nbrPages) && (page = nbrPages) ? true : false}
 
-        }else{
-
-            for (var i = 1; i <= nbrPages; i++) {
-                pagination.push(<span className={this.props.page != i ? 'pagination' : 'paginationNoClick'}onClick={this.handleClick.bind(this, i)}>{i}</span>);
-            }
-        }
-
+            />);
         return (
           <div>
               <div>
-                  {console.log(nbrPages)}
+                  {/*{console.log(nbrPages)}*/}
                   <br/>
                   {pagination}
                   <p>Nombre de produits : {this.props.total}</p>

@@ -8,6 +8,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {deepOrange500} from 'material-ui/styles/colors';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import RaisedButton from 'material-ui/RaisedButton';
+import ActionAndroid from 'material-ui/svg-icons/action/android';
+import FontIcon from 'material-ui/FontIcon';
 
 var Search = React.createClass({
     // handleChange: function(e){
@@ -25,22 +28,29 @@ var Search = React.createClass({
                 accent1Color: deepOrange500,
             },
         });
+        const FontIconExampleIcons = () => (
+                <FontIcon className="material-icons">home</FontIcon>
+        );
         return (
-            <MuiThemeProvider muiTheme={muiTheme}>
 
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        <p>Chercher un produit par son nom</p>
-                        {/*onChange={this.handleChange}*/}
-                        {/*<input name="search" type="text"  ref="search"/>*/}
-                    </label>
-                    <TextField name="search" type="text"  ref="search"
-                        hintText="Hint Text"
+                    {/*<label>*/}
+                        {/*<p>Chercher un produit par son nom</p>*/}
+                        {/*/!*onChange={this.handleChange}*!/*/}
+                        {/*/!*<input name="search" type="text"  ref="search"/>*!/*/}
+                    {/*</label>*/}
+                    <TextField
+                        name="search" type="text"  ref="search"
+                        hintText="Taper les lettres"
+                        fullWidth="true"
+                        floatingLabelText="Rechercher un produit"
                     />
-                    <input type="submit" value="Submit"/>
+                    <RaisedButton
+                        label="Rechercher"
+                        labelPosition="before"
+                        primary={true}
+                    />
                 </form>
-            </MuiThemeProvider>
-
         );
     }
 });

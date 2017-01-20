@@ -22,6 +22,9 @@ import Dialog from 'material-ui/Dialog';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import CircularProgress from 'material-ui/CircularProgress';
 import TextField from 'material-ui/TextField';
+
+import AppBar from 'material-ui/AppBar';
+
 var Loader = require('react-loaders').Loader;
 
 
@@ -38,7 +41,7 @@ var Engine = React.createClass({
             productsPerPage: 20,
             storeChoose: '*',
             stores: [],
-            country: 'switzerland',
+            country: 'france',
             value: "1",
             loading: true,
         }
@@ -66,8 +69,22 @@ var Engine = React.createClass({
         this.setState({pages: page});
         this.loadData(this.state.search, page, this.state.productsPerPage,this.state.storeChoose);
     },
-    handleStoreChange(string){
-        var store = string.target.value;
+    // handleStoreChange(string){
+    //     console.log("magasing", string);
+    //     var store = string.target.value;
+    //     this.setState({pages: 1});
+    //     // this.setState({storeChoose: string.target.value});
+    //     this.setState({storeChoose: store}, function(){
+    //         console.log("CALLBACK ?",this.state.storeChoose === store); // true
+    //         if(this.state.storeChoose === store){
+    //             this.loadData(this.state.search, this.state.pages, this.state.productsPerPage, this.state.storeChoose);
+    //         }
+    //     }.bind(this));
+    // },
+    handleStoreChange: function handleChange(event, index, value) {
+        console.log(value);
+        console.log("magasing", value);
+        var store = value;
         this.setState({pages: 1});
         // this.setState({storeChoose: string.target.value});
         this.setState({storeChoose: store}, function(){
@@ -136,21 +153,23 @@ var Engine = React.createClass({
         // $.getJSON('https://a.wunderlist.com/api/v1/lists/251762132', function(data) { alert("Success"); console.log("getWunderlist",data); });
 
     },
-
     renderStores(){
            return (
                <span>
-                   <form>
-                        <select value={this.state.storeChoose} onChange={this.handleStoreChange}>
-                            <option value="*">Tous</option>
-                            <option value="migros">Migros</option>
-                            <option value="denner">Denner</option>
-                            <option value="coop">Coop</option>
-                            <option value="intermarché">Intermarché</option>
-                            <option value="cora">Cora</option>
-                        </select>
-                        {/*<input type="submit" value="Submit"/>*/}
-                    </form>
+
+                    <SelectField
+                        floatingLabelText="Choisir le magasin"
+                        value={this.state.storeChoose} onChange={this.handleStoreChange}
+                        fullWidth="true"
+                    >
+                         <MenuItem primaryText="Tous" value="*" />
+                        <MenuItem primaryText="Migros" value="migros" />
+                        <MenuItem primaryText="Denner" value="denner" />
+                        <MenuItem primaryText="Coop" value="coop" />
+                        <MenuItem primaryText="Intermarché" value="intermarché" />
+                        <MenuItem primaryText="Cora" value="cora" />
+
+                </SelectField>
                </span>
            )
     },
@@ -160,40 +179,22 @@ var Engine = React.createClass({
         });
     },
     render: function(){
-        const standardActions = (
-            <FlatButton
-                label="Ok"
-                primary={true}
-                onTouchTap={this.handleRequestClose}
-            />
-        );
-        const muiTheme = getMuiTheme({
-            palette: {
-                accent1Color: deepOrange500,
-            },
-        });
+
         var styles = {
             container: {
                 display: 'none'
             },
         };
-        function renderLoader() {
-            return <Loader type="line-scale" active="true" />
-        }
+
         return (
           <div>
-
-              <MuiThemeProvider muiTheme={muiTheme}>
-
-
-              <CircularProgress size={60} thickness={7} color="#ffffff" style={this.state.loading}/>
-
-
-
-
-              </MuiThemeProvider>
+              <AppBar
+                  title="Courses Listes"
+                  iconClassNameRight="muidocs-icon-navigation-expand-more"
+              />
 
               {console.log("search"+ this.state.search, "Page " + this.state.pages)}
+              <div>
               <div className="header">
                   <h1>Courses Listes</h1>
                   <i>Périmètre de la recherche : {this.state.country}</i>
@@ -201,18 +202,24 @@ var Engine = React.createClass({
                   <Search onSubmit={this.handleSearchSubmit} />
                   <div>{this.renderStores()}</div>
                   <Country onChange={this.handleCountryChange} country={this.state.country}/>
-                  <button type="button" onClick={this.handleReset}>Réinitialiser</button>
+                  <RaisedButton
+                      label="Réinitialiser"
+                      labelPosition="before"
+                      primary={true}
+                      onClick={this.handleReset}
+                  />
                   <Paging page={this.state.pages} total={this.state.total} productsPerPage={this.state.productsPerPage} onSubmit={this.handlePagingSubmit} />
               </div>
+                  </div>
 
-              <div className="section group">
-              {
-                  this.state.products.map(function(item){
-                        return <RenderProducts products={item}/>;
-                      }
-                  )
-              }
-              </div>
+                  <div className="section group">
+                  {
+                      this.state.products.map(function(item){
+                            return <RenderProducts products={item}/>;
+                          }
+                      )
+                  }
+                  </div>
 
           </div>
       );
