@@ -27,7 +27,7 @@ var Paging = React.createClass({
     },
     handleClick: function(e){
         // this.props.onClick(e);
-        console.log("s "+e);
+        // console.log("s "+e);
         this.props.onSubmit(e);
     },
     render: function(){
@@ -127,7 +127,7 @@ var Paging = React.createClass({
                         onClick={this.handleClick.bind(this, i)}
                         disabled={this.props.page != i ? false : true}
                     />);
-                // pagination.push(<span className={this.props.page != i ? 'pagination' : 'paginationNoClick'} onClick={this.handleClick.bind(this,  i)}>{i}</span>);
+                // pagination.push(<span className={this.props.page != i ? npm stzart'pagination' : 'paginationNoClick'} onClick={this.handleClick.bind(this,  i)}>{i}</span>);
             }
             // pagination.push(
             //     <RaisedButton
@@ -158,7 +158,7 @@ var Paging = React.createClass({
         return (
           <div>
               <div>
-                  {console.log(nbrPages, page, limitpage)}
+                  {/*{console.log(nbrPages, page, limitpage)}*/}
                   <br/>
                   {pagination}
                   <p>Nombre de produits : {this.props.total}</p>

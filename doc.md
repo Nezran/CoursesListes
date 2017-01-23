@@ -301,3 +301,11 @@ var Child = React.createClass({
 ```
 <h1 style={{ color: 'red' }}>Hello world</h1>
 ```
+
+## Accéder au this de la class dans une function boucle
+
+```
+ this.state.products.map(function (item){
+      return <RenderProducts onClick={this.onClickProduct} products={item}/>
+ }.bind(this))
+```

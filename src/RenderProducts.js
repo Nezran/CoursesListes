@@ -19,18 +19,18 @@ import {
     white, darkBlack, fullBlack, amber500
 } from 'material-ui/styles/colors';
 var RenderProducts = React.createClass({
-    getIcon: function(value){
+    getIcon: function(value) {
         const iconStyles = {
             marginRight: 24,
         };
-        switch (value){
+        switch (value) {
             case "high":
                 return (
                     <ActionThumbDown color={red500} style={iconStyles}/>
                 );
                 break;
             case "low":
-                return(
+                return (
                     <ActionThumbUp color={green900} style={iconStyles}/>
                 );
                 break;
@@ -40,6 +40,10 @@ var RenderProducts = React.createClass({
                 );
                 break;
         }
+    },
+    onClickProduct: function(product){
+        // console.log(product);
+        this.props.onClick(product);
     },
     render: function(){    
             // if(!this.props.products.nutriments.fat ){
@@ -120,12 +124,12 @@ var RenderProducts = React.createClass({
                                     :
                                     ""
                             }
-
                         </CardText>
                         <CardActions>
                             {/*<FlatButton label="Action1" />*/}
                             {/*<FlatButton label="Action2" />*/}
-                            <RaisedButton label="Descriptif complet" primary={true} href={this.props.products.url} />
+                            <RaisedButton label="Descriptif complet" primary={false} href={this.props.products.url} />
+                            <RaisedButton label="Ajouter" primary={false} onClick={this.onClickProduct.bind(this,this.props.products)} />
                         </CardActions>
                     </Card>
                 </div>
