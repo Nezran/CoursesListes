@@ -8,6 +8,7 @@ var $ = require('jquery');
 var Paging = require('./Paging');
 var RenderProducts = require('./RenderProducts');
 var Country = require('./Country');
+// import {CourseList} from './CourseList';
 require('./App.css');
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -22,7 +23,10 @@ import Dialog from 'material-ui/Dialog';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import CircularProgress from 'material-ui/CircularProgress';
 import TextField from 'material-ui/TextField';
+import ActionShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
 
+// import CourseList from'./CourseList';
+let CourseList = require('./CourseList').CourseList;
 import AppBar from 'material-ui/AppBar';
 
 var Loader = require('react-loaders').Loader;
@@ -41,15 +45,44 @@ var Engine = React.createClass({
             productsPerPage: 20,
             storeChoose: '*',
             stores: [],
+            shopProducts: [],
             country: 'france',
             value: "1",
             loading: true,
         }
     },
     componentDidMount: function() {
+        this.testSwisscom();
         this.loadWunderlist();
         this.loadData(this.state.search,1,this.state.productsPerPage,this.state.storeChoose);
         // this.loadStore();
+    },
+    testSwisscom: function(){
+        $.ajaxSetup({
+            headers : {
+                'client_id': 'KmSSuzyQsjtLgwvjilQSfZfbOQ15myMA',
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        });
+        var data = {outboundSMSMessageRequest: {
+                address: ["tel:798261595"],
+                senderAddress: "tel:798261595",
+                senderName: "mick",
+                outboundSMSTextMessage: {
+                message: "hello"
+            }
+        }};
+        $.ajax({
+            type: "POST",
+            url: "https://api.swisscom.com/v1/messaging/sms/outbound/tel:41798261595/requests",
+            data: JSON.stringify(data),
+            success: function(data){
+                console.log(data);
+            },
+            error: function(resultat, statut, erreur){
+                console.log(resultat, statut, erreur);
+            }
+        });
     },
     handleChange(string) {
         this.setState({search: string, pages:1});
@@ -110,6 +143,18 @@ var Engine = React.createClass({
         // this.replaceState(this.getInitialState());
         this.setState(this.getInitialState());
     },
+    handleClickProduct(product){
+        var shopProducts = this.state.shopProducts;
+        var shopProduct =  {
+            name: product.product_name_fr,
+            code: product.code,
+            image: product.image_url,
+            image_thumb: product.image_front_thumb_url,
+        };
+        var code = product.code;
+        shopProducts[code] = shopProduct;
+        this.setState({shopProducts});
+    },
     loadData(search, page, productsPerPage, storeChoose){
         this.setState({loading: true}, function(){
             return $.getJSON(
@@ -153,6 +198,9 @@ var Engine = React.createClass({
         // $.getJSON('https://a.wunderlist.com/api/v1/lists/251762132', function(data) { alert("Success"); console.log("getWunderlist",data); });
 
     },
+    handleTouchShop(event){
+        console.log(event);
+    },
     renderStores(){
            return (
                <span>
@@ -162,7 +210,7 @@ var Engine = React.createClass({
                         value={this.state.storeChoose} onChange={this.handleStoreChange}
                         fullWidth="true"
                     >
-                         <MenuItem primaryText="Tous" value="*" />
+                        <MenuItem primaryText="Tous" value="*" />
                         <MenuItem primaryText="Migros" value="migros" />
                         <MenuItem primaryText="Denner" value="denner" />
                         <MenuItem primaryText="Coop" value="coop" />
@@ -190,13 +238,15 @@ var Engine = React.createClass({
           <div>
               <AppBar
                   title="Courses Listes"
-                  iconClassNameRight="muidocs-icon-navigation-expand-more"
+                  iconElementRight={<ActionShoppingCart/>}
+                  onRightIconButtonTouchTap={this.handleTouchShop}
               />
 
-              {console.log("search"+ this.state.search, "Page " + this.state.pages)}
+              {/*{console.log("search"+ this.state.search, "Page " + this.state.pages)}*/}
               <div>
               <div className="header">
                   <h1>Courses Listes</h1>
+                  <CourseList product={this.state.shopProducts} />
                   <i>Périmètre de la recherche : {this.state.country}</i>
                   {/*<GetProducts search={this.state.search} onLoad={this.handleLoad}/>*/}
                   <Search onSubmit={this.handleSearchSubmit} />
@@ -214,10 +264,9 @@ var Engine = React.createClass({
 
                   <div className="section group">
                   {
-                      this.state.products.map(function(item){
-                            return <RenderProducts products={item}/>;
-                          }
-                      )
+                      this.state.products.map(function (item){
+                          return <RenderProducts onClick={this.handleClickProduct} products={item}/>
+                      }.bind(this))
                   }
                   </div>
 

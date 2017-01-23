@@ -107,7 +107,7 @@ var Paging = React.createClass({
                         onClick={this.handleClick.bind(this, i)}
                         disabled={this.props.page != i ? false : true}
                     />);
-                // pagination.push(<span className={this.props.page != i ? 'pagination' : 'paginationNoClick'} onClick={this.handleClick.bind(this,  i)}>{i}</span>);
+                // pagination.push(<span className={this.props.page != i ? npm stzart'pagination' : 'paginationNoClick'} onClick={this.handleClick.bind(this,  i)}>{i}</span>);
             }
             // pagination.push(
             //     <RaisedButton

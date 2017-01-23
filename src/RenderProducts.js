@@ -5,6 +5,10 @@
 var React = require('react');
 
 var RenderProducts = React.createClass({
+    onClickProduct: function(product){
+        // console.log(product);
+        this.props.onClick(product);
+    },
     render: function(){    
             // if(!this.props.products.nutriments.fat ){
             //     this.props.products.nutriments.fat = 0;
@@ -72,6 +76,8 @@ var RenderProducts = React.createClass({
 
                      </span>
                     <a href={this.props.products.url} target="_blank">Descriptif complet</a>
+                        <br />
+                    <a onClick={this.onClickProduct.bind(this,this.props.products)}>Ajouter</a>
                     </span>
                 </div>
             )

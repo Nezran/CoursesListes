@@ -8,13 +8,14 @@
   "dependencies": {
     "jquery": "^3.1.1",
     "loaders.css": "^0.1.2",
+    "material-ui": "^0.16.7",
     "materialize-css": "^0.97.8",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-loaders": "^2.3.0",
     "react-materialize": "^0.17.7",
     "react-tap-event-plugin": "^2.0.1",
-    "material-ui" : "^0.16.7"
+    "swisscom-sms-api": "^0.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
