@@ -7,6 +7,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {green800, green100} from 'material-ui/styles/colors';
 import ArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import ArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import ArrowTo from 'material-ui/svg-icons/navigation/arrow-forward';
 
 var Paging = React.createClass({
     // getDefaultProps: function () {
@@ -52,31 +54,36 @@ var Paging = React.createClass({
             // console.log(typeof(page));
 
             var limitpage = 0;
-            if(nbrPages < 3){
-                limitpage = nbrPages;
-            }else{
-                limitpage = page + 3;
+            var start = 0;
+            var end = 0;
 
+            if(nbrPages - 7 <= 0){
+                end = nbrPages;
+                start = 1;
+            }else{
+                if(page <= 3){
+                    start = 1;
+                    end = 7;
+                }else{
+                    if(nbrPages - page < 3){
+                        end = nbrPages;
+                        start = nbrPages - 6 ;
+                    }else{
+                        start = page - 3;
+                        end = page + 3;
+                    }
+                }
             }
 
-            if(page <= 3){
-                page = 1;
-            }else{
-                page = page - 3;
-            }
-            // console.log(typeof(page), typeof(limitpage));
-
-            // console.log("limit"+page);
-
+            // console.log("start",start,"end",end);
 
             var pageprev = 0;
-            // pageprev = Number(page) - 1;
             if((Number(this.props.page) - 1) < 1){
                 pageprev = 1;
             }else{
                 pageprev = Number(this.props.page) - 1;
             }
-            console.log("prev",pageprev);
+            // console.log("prev",pageprev);
 
 
             var pagenext = 0;
@@ -85,19 +92,32 @@ var Paging = React.createClass({
             }else{
                 pagenext = Number(this.props.page) + 1;
             }
-            console.log("next",pagenext);
+            // console.log("next",pagenext);
 
 
             // (Number(this.props.page) - 1) => 1 ? 2 : 1
+
+            pagination.push( <RaisedButton
+                label={1}
+                labelPosition="before"
+                icon={<ArrowBack />}
+                style={styles.button}
+                fullWidth="false"
+                onClick={this.handleClick.bind(this, 1 )}
+                disabled={this.props.page == 1 ? true : false}
+
+            />);
+
             pagination.push( <RaisedButton
                 icon={<ArrowLeft />}
                 style={styles.button}
                 fullWidth="false"
                 onClick={this.handleClick.bind(this, pageprev )}
-                disabled={limitpage == 1 ? true : false}
+                disabled={this.props.page == 1 ? true : false}
 
             />);
-            for (var i = page; i <= limitpage; i++) {
+
+            for (var i = start; i <= end; i++) {
                 pagination.push(
                     <RaisedButton
                         style={styles.button}
@@ -122,17 +142,28 @@ var Paging = React.createClass({
                 style={styles.button}
                 fullWidth="false"
                 onClick={this.handleClick.bind(this, pagenext)}
-                disabled={(pagenext == nbrPages) && (page = nbrPages) ? true : false}
+                disabled={(this.props.page >= nbrPages) || (nbrPages == 0) ? true : false}
+
+            />);
+            pagination.push( <RaisedButton
+                label={nbrPages}
+                labelPosition="after"
+                icon={<ArrowTo />}
+                style={styles.button}
+                fullWidth="false"
+                onClick={this.handleClick.bind(this, nbrPages)}
+                disabled={(this.props.page == nbrPages) || (nbrPages == 0) ? true : false}
 
             />);
         return (
           <div>
               <div>
-                  {/*{console.log(nbrPages)}*/}
+                  {console.log(nbrPages, page, limitpage)}
                   <br/>
                   {pagination}
                   <p>Nombre de produits : {this.props.total}</p>
                   <p>Nombre de produits par page : {this.props.productsPerPage}</p>
+                  <p>Nombre de pages: {nbrPages}</p>
               </div>
           </div>
         );

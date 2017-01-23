@@ -9,7 +9,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
     green500, cyan700,
-    pinkA200,
+    brown500,
     grey100, grey300, grey400, grey500,
     white, darkBlack, fullBlack,
 } from 'material-ui/styles/colors';
@@ -36,6 +36,7 @@ var Template = React.createClass({
                 borderColor: grey300,
                 pickerHeaderColor: green500,
                 shadowColor: fullBlack,
+
             },
         });
         return (
