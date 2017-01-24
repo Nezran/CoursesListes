@@ -58,12 +58,16 @@ var RenderProducts = React.createClass({
             color: white,
         };
 
-            if(!this.props.products.nutriments['saturated-fat']){
+        // console.log(this.props.products.nutriments['saturated-fat']);
+            if(this.props.products.nutriments['saturated-fat']){
+
+
+            }else{
+                console.log(this.props.products);
                 this.props.products.nutriments['saturated-fat'] = 0;
                 this.props.products.nutriments['saturated-fat_unit'] = "g";
                 this.props.products.nutrient_levels['saturated-fat'] = "low";
-                // console.log(this.props.products);
-                // console.log("dsadasdas :", this.props.products.nutriments['saturated-fat_unit']);
+                console.log("dsadasdas :", this.props.products.nutriments['saturated-fat_unit']);
             }
 
             return (
@@ -105,7 +109,7 @@ var RenderProducts = React.createClass({
                                     ""
                             }
 
-                            { this.props.products.nutrient_levels.sugars && this.props.products.nutrient_levels.sugars ?
+                            { this.props.products.nutrient_levels.sugars != 'undefined' && this.props.products.nutrient_levels.sugars != 'undefined' ?
 
                                 <p>
                                     {this.getIcon(this.props.products.nutrient_levels.sugars ? this.props.products.nutrient_levels.sugars : "low")}
@@ -128,7 +132,7 @@ var RenderProducts = React.createClass({
                         <CardActions>
                             {/*<FlatButton label="Action1" />*/}
                             {/*<FlatButton label="Action2" />*/}
-                            <RaisedButton label="Descriptif complet" primary={false} href={this.props.products.url} />
+                            <RaisedButton target="_blank" label="Descriptif complet" primary={false} href={this.props.products.url} />
                             <RaisedButton label="Ajouter" primary={false} onClick={this.onClickProduct.bind(this,this.props.products)} />
                         </CardActions>
                     </Card>

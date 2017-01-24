@@ -26,8 +26,9 @@ import TextField from 'material-ui/TextField';
 import ActionShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
 
 // import CourseList from'./CourseList';
-let CourseList = require('./CourseList').CourseList;
+import CourseList from './CourseList';
 import AppBar from 'material-ui/AppBar';
+import Snackbar from 'material-ui/Snackbar';
 
 var Loader = require('react-loaders').Loader;
 
@@ -49,93 +50,19 @@ var Engine = React.createClass({
             country: 'france',
             value: "1",
             loading: true,
+            openModal: false,
+            ModalMessage: 'Produit ajouté',
+            productsDisabledClick: [],
         }
     },
     componentDidMount: function() {
-        this.testSwisscom();
         this.loadWunderlist();
         this.loadData(this.state.search,1,this.state.productsPerPage,this.state.storeChoose);
         // this.loadStore();
     },
-    testSwisscom: function(){
-
-        // $.post( "http://mickael-lacombe.com/smsapi/api.php", { num: "798261595", text: "https://ssl-api.openfoodfacts.org/product/5449000000996/coca-cola" })
-        //     .done(function( data ) {
-        //         console.log( "Data Loaded: " + data );
-        //     });
-        // var data = {
-        //     num: "798261595",
-        //     text: "coucou from react"
-        // };
-        // $.ajax({
-        //     type: "POST",
-        //     url: "http://mickael-lacombe.com/smsapi/api.php",
-        //     data: JSON.stringify(data),
-        //     success: function(data){
-        //         console.log(data);
-        //     },
-        //     error: function(resultat, statut, erreur){
-        //         console.log(resultat, statut, erreur);
-        //     }
-        // });
-        // var data = {outboundSMSMessageRequest: {
-        //     address: ["tel:798261595"],
-        //     senderAddress: "tel:798261595",
-        //     senderName: "mick",
-        //     outboundSMSTextMessage: {
-        //         message: "hello"
-        //     }
-        // }};
-        // fetch('https://api.swisscom.com/v1/messaging/sms/outbound/tel%3A%2B41798261595/requests', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //     },
-        //     body: JSON.stringify(data)
-        // })
-        // $.ajaxSetup({
-        //     headers : {
-        //         'client_id': 'KmSSuzyQsjtLgwvjilQSfZfbOQ15myMA',
-        //         'Content-Type': 'application/json; charset=utf-8'
-        //     }
-        // });
-        // var data = {outboundSMSMessageRequest: {
-        //         address: ["tel:798261595"],
-        //         senderAddress: "tel:798261595",
-        //         senderName: "mick",
-        //         outboundSMSTextMessage: {
-        //         message: "hello"
-        //     }
-        // }};
-        // $.ajax({
-        //     type: "POST",
-        //     url: "https://api.swisscom.com/v1/messaging/sms/outbound/tel%3A%2B41798261595/requests",
-        //     data: JSON.stringify(data),
-        //     dataType: 'jsonp',
-        //     success: function(data){
-        //         console.log(data);
-        //     },
-        //     error: function(resultat, statut, erreur){
-        //         console.log(resultat, statut, erreur);
-        //     }
-        // });
-
-        // $.ajaxSetup({
-        //     headers : {
-        //         'client_id': 'KmSSuzyQsjtLgwvjilQSfZfbOQ15myMA',
-        //     }
-        // });
-        // $.getJSON('https://api.swisscom.com/v1/messaging/sms/outbound/tel%3A%2B41798261595/requests', function(data) { alert("Success"); console.log("getWunderlist",data); });
-    },
     handleChange(string) {
         this.setState({search: string, pages:1});
     },
-    // handleLoad(data){
-    //     this.setState({products: data.products, total: data.count});
-    // },
-    // handlePages(page){
-    //     this.setState({pages:page});
-    // },
     handleSearchSubmit(search){
         this.setState({pages: 1});
         this.loadData(search,1,this.state.productsPerPage,this.state.storeChoose);
@@ -187,16 +114,45 @@ var Engine = React.createClass({
         this.setState(this.getInitialState());
     },
     handleClickProduct(product){
-        var shopProducts = this.state.shopProducts;
+        // var shopProducts = this.state.shopProducts.slice();
         var shopProduct =  {
             name: product.product_name_fr,
             code: product.code,
             image: product.image_url,
             image_thumb: product.image_front_thumb_url,
         };
-        var code = product.code;
-        shopProducts[code] = shopProduct;
-        this.setState({shopProducts});
+        // var code = product.code;
+        // shopProducts.push(shopProduct);
+        // this.setState({shopProducts:shopProducts, ModalMessage: shopProduct.name}, function(){
+        //     this.setState({openModal: true});
+        // });
+        var test = this.state.productsDisabledClick.slice();
+        var control = false;
+        test.map((key) => {
+            if(key == product.code){
+                control = true;
+            }
+        });
+        if(control != true){
+            this.setState(previousState => ({
+                shopProducts: [...previousState.shopProducts, shopProduct]
+            }));
+            this.setState(previousState => ({
+                productsDisabledClick: [...previousState.productsDisabledClick, shopProduct.code]
+            }));
+            this.setState({ModalMessage: shopProduct.name}, function(){
+                this.setState({openModal: true});
+            });
+        }else{
+            this.setState({ModalMessage: "Produit déjà ajouté !"}, function(){
+                this.setState({openModal: true});
+            });
+        }
+
+        // console.log(this.state.shopProducts, this.state.productsDisabledClick);
+    },
+    handleCloseModal: function(){
+      this.setState({openModal:false});
     },
     loadData(search, page, productsPerPage, storeChoose){
         this.setState({loading: true}, function(){
@@ -244,6 +200,9 @@ var Engine = React.createClass({
     handleTouchShop(event){
         console.log(event);
     },
+    handleShopProductDelete: function(product){
+        console.log(product);
+    },
     renderStores(){
            return (
                <span>
@@ -289,7 +248,7 @@ var Engine = React.createClass({
               <div>
               <div className="header">
                   <h1>Courses Listes</h1>
-                  <CourseList product={this.state.shopProducts} />
+                  <CourseList product={this.state.shopProducts} onDelete={this.handleShopProductDelete} />
                   <i>Périmètre de la recherche : {this.state.country}</i>
                   {/*<GetProducts search={this.state.search} onLoad={this.handleLoad}/>*/}
                   <Search onSubmit={this.handleSearchSubmit} />
@@ -308,11 +267,11 @@ var Engine = React.createClass({
                   <div className="section group">
                   {
                       this.state.products.map(function (item){
-                          return <RenderProducts onClick={this.handleClickProduct} products={item}/>
+                          return <RenderProducts key={item.key} onClick={this.handleClickProduct} products={item}/>
                       }.bind(this))
                   }
                   </div>
-
+              <Snackbar open={this.state.openModal} message={this.state.ModalMessage} autoHideDuration={4000}onRequestClose={this.handleCloseModal} />
           </div>
       );
     }

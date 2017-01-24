@@ -39,7 +39,7 @@ html{
 .products{
   min-height: 600px;
   float: left;
-  width: calc(20% - 12px);
+  width: calc(25% - 12px);
   margin: 5px;
 }
 
