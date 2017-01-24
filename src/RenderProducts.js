@@ -63,11 +63,11 @@ var RenderProducts = React.createClass({
 
 
             }else{
-                console.log(this.props.products);
+                // console.log(this.props.products);
                 this.props.products.nutriments['saturated-fat'] = 0;
                 this.props.products.nutriments['saturated-fat_unit'] = "g";
                 this.props.products.nutrient_levels['saturated-fat'] = "low";
-                console.log("dsadasdas :", this.props.products.nutriments['saturated-fat_unit']);
+                // console.log("dsadasdas :", this.props.products.nutriments['saturated-fat_unit']);
             }
 
             return (

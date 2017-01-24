@@ -271,7 +271,7 @@ var Engine = React.createClass({
                       }.bind(this))
                   }
                   </div>
-              <Snackbar open={this.state.openModal} message={this.state.ModalMessage} autoHideDuration={4000}onRequestClose={this.handleCloseModal} />
+              <Snackbar open={this.state.openModal} message={this.state.ModalMessage ? this.state.ModalMessage : "Produit sans nom"} autoHideDuration={4000}onRequestClose={this.handleCloseModal} />
           </div>
       );
     }

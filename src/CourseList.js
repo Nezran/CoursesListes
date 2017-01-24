@@ -25,18 +25,20 @@ var CourseList = React.createClass({
             confirmSMS: false,
             phoneNumber:'',
             toggled: true,
-            confirmWunderlist: false
+            confirmWunderlist: false,
+            openWunderlist: false,
+            email:'',
         }
     },
     loadWunderlist(){
 
 
-    $.ajaxSetup({
-        headers : {
-            'Content-Type': 'image/png'
-        }
-    });
-     $.getJSON('https://static.openfoodfacts.org/images/products/327/408/000/5003/front_fr.20.200.jpg', function(data) { alert("Success"); console.log("getWunderlist",data); });
+    // $.ajaxSetup({
+    //     headers : {
+    //         'Content-Type': 'image/png'
+    //     }
+    // });
+    //  $.getJSON('https://static.openfoodfacts.org/images/products/327/408/000/5003/front_fr.20.200.jpg', function(data) { alert("Success"); console.log("getWunderlist",data); });
 
     // $.post( "https://a.wunderlist.com/api/v1/lists", { title: "list test" })
     //     .done(( data)  => {
@@ -70,80 +72,80 @@ var CourseList = React.createClass({
         // });
 
 
-            // $.ajax({
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'application/json',
-            //         'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
-            //         'X-Client-ID': '5764457c678b01bd15f5',
-            //     },
-            //     'type': 'POST',
-            //     'url':  "https://a.wunderlist.com/api/v1/lists",
-            //     'data': JSON.stringify({ title: "list test 2" }),
-            //     'dataType': 'json',
-            //     'success': (data) => {
-            //         console.log(data.id);
-            //         $.ajax({
-            //             headers: {
-            //                 'Accept': 'application/json',
-            //                 'Content-Type': 'application/json',
-            //                 'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
-            //                 'X-Client-ID': '5764457c678b01bd15f5',
-            //             },
-            //             'type': 'POST',
-            //             'url':  "https://a.wunderlist.com/api/v1/memberships",
-            //             'data': JSON.stringify({ list_id: data.id, email: 'mickael.lacombe@cpnv.ch' }),
-            //             'dataType': 'json',
-            //             'success': (data) => {
-            //                 console.log(data);
-            //
-            //                 this.props.product.map((key, index) => {
-            //
-            //                     // prepare = prepare + key.name + " ; ";
-            //                     $.ajax({
-            //                         headers: {
-            //                             'Accept': 'application/json',
-            //                             'Content-Type': 'application/json',
-            //                             'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
-            //                             'X-Client-ID': '5764457c678b01bd15f5',
-            //                         },
-            //                         'type': 'POST',
-            //                         'url':  "https://a.wunderlist.com/api/v1/tasks",
-            //                         'data': JSON.stringify({ list_id: data.list_id, title: key.name }),
-            //                         'dataType': 'json',
-            //                         'success': (data) => {
-            //                             console.log(data);
-            //                             $.ajax({
-            //                                 headers: {
-            //                                     'Accept': 'application/json',
-            //                                     'Content-Type': 'application/json',
-            //                                     'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
-            //                                     'X-Client-ID': '5764457c678b01bd15f5',
-            //                                 },
-            //                                 'type': 'POST',
-            //                                 'url':  "https://a.wunderlist.com/api/v1/notes",
-            //                                 'data': JSON.stringify({ task_id: data.id, content: key.image }),
-            //                                 'dataType': 'json',
-            //                                 'success': (data) =>{
-            //                                     console.log(data);
-            //                                     this.setState({confirmWunderlist: true});
-            //
-            //                                 }
-            //                             });
-            //
-            //                         }
-            //                     });
-            //
-            //
-            //
-            //                 });
-            //
-            //
-            //             }
-            //         });
-            //
-            //     }
-            // });
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
+                    'X-Client-ID': '5764457c678b01bd15f5',
+                },
+                'type': 'POST',
+                'url':  "https://a.wunderlist.com/api/v1/lists",
+                'data': JSON.stringify({ title: "list test 2" }),
+                'dataType': 'json',
+                'success': (data) => {
+                    console.log(data.id);
+                    $.ajax({
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
+                            'X-Client-ID': '5764457c678b01bd15f5',
+                        },
+                        'type': 'POST',
+                        'url':  "https://a.wunderlist.com/api/v1/memberships",
+                        'data': JSON.stringify({ list_id: data.id, email: this.state.email }),
+                        'dataType': 'json',
+                        'success': (data) => {
+                            console.log(data);
+
+                            this.props.product.map((key, index) => {
+
+                                // prepare = prepare + key.name + " ; ";
+                                $.ajax({
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json',
+                                        'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
+                                        'X-Client-ID': '5764457c678b01bd15f5',
+                                    },
+                                    'type': 'POST',
+                                    'url':  "https://a.wunderlist.com/api/v1/tasks",
+                                    'data': JSON.stringify({ list_id: data.list_id, title: key.name }),
+                                    'dataType': 'json',
+                                    'success': (data) => {
+                                        console.log(data);
+                                        $.ajax({
+                                            headers: {
+                                                'Accept': 'application/json',
+                                                'Content-Type': 'application/json',
+                                                'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
+                                                'X-Client-ID': '5764457c678b01bd15f5',
+                                            },
+                                            'type': 'POST',
+                                            'url':  "https://a.wunderlist.com/api/v1/notes",
+                                            'data': JSON.stringify({ task_id: data.id, content: key.image }),
+                                            'dataType': 'json',
+                                            'success': (data) =>{
+                                                console.log(data);
+                                                this.setState({confirmWunderlist: true});
+
+                                            }
+                                        });
+
+                                    }
+                                });
+
+
+
+                            });
+
+
+                        }
+                    });
+
+                }
+            });
 
     },
     ApiSMSSwisscom: function(text){
@@ -168,20 +170,31 @@ var CourseList = React.createClass({
             phoneNumber: value,
         });
     },
+    handleChangeEmail: function(email){
+        var value = email.target.value;
+
+        this.setState({
+            email: value,
+        });
+    },
     handleSms: function(){
         this.setState({openSms: true});
         this.setState({open: false});
 
     },
-    handleWunderlist: function(){
+    handleSendWunderlist: function(){
         this.loadWunderlist();
+    },
+    handleWunderlist: function(){
+        // this.loadWunderlist();
+        this.setState({openWunderlist:true, open:false});
     },
     handleOrderClose:  function () {
         this.setState({open: false});
 
     },
     handleAllClose: function () {
-        this.setState({open: false, openSms: false});
+        this.setState({open: false, openSms: false, openWunderlist:false});
     },
     handleDeleteProduct: function(product){
         console.log(product);
@@ -211,7 +224,10 @@ var CourseList = React.createClass({
         console.log(this.state.toggled)
     },
     handleCloseModal: function(){
-        this.setState({confirmSMS:false, confirmWunderlist: false});
+        this.setState({confirmSMS:false, confirmWunderlist: false,openWunderlist: false});
+    },
+    handleClose: function(){
+        this.setState({open:false, openSms: false,openWunderlist:false});
     },
 
     render: function(){
@@ -249,6 +265,24 @@ var CourseList = React.createClass({
                 label="Envoyer par sms"
                 primary={true}
                 onTouchTap={this.handleSend}
+                disabled={typeof this.props.product[0] !== 'undefined' ? false : true}
+                icon={<ArrowRight />}
+
+            />,
+        ];
+
+        const actionsWunderlist=[
+            <FlatButton
+                label="Fermer la fenêtre"
+                primary={true}
+                onTouchTap={this.handleAllClose}
+                icon={<NavigationClose />}
+
+            />,
+            <FlatButton
+                label="Créer la todolist"
+                primary={true}
+                onTouchTap={this.handleSendWunderlist}
                 disabled={typeof this.props.product[0] !== 'undefined' ? false : true}
                 icon={<ArrowRight />}
 
@@ -355,6 +389,21 @@ var CourseList = React.createClass({
                       toggled={this.state.toggled}
 
                   />
+              </Dialog>
+
+              <Dialog
+                  title="Indiquer votre adresse email lié à Wunderlist"
+                  actions={actionsWunderlist}
+                  modal={false}
+                  open={this.state.openWunderlist}
+                  onRequestClose={this.handleClose}
+              >
+                  <TextField
+                      id="text-field-controlled"
+                      hintText="Email lié à votre contre Wunderlist"
+                      onChange={this.handleChangeEmail}
+                  />
+
               </Dialog>
               <Snackbar open={this.state.confirmSMS} message="Le sms a été bien envoyé" autoHideDuration={4000} onRequestClose={this.handleCloseModal} />
               <Snackbar open={this.state.confirmWunderlist} message="Todolist bien créer" autoHideDuration={4000} onRequestClose={this.handleCloseModal} />
