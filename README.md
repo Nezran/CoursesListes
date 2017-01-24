@@ -70,7 +70,7 @@ L'API principale Open Food Facts est une API libre, certains produits peuvent ê
 Je n'ai pas pris en compte les erreurs des API swisscom et wunderlist, comme un numéro de téléphone ou email érroné. 
 ## API utilisées
 
-[Wunderlist](developer.wunderlist.com)
+[Wunderlist](http://developer.wunderlist.com)
 
 [Open Food Facts](http://world-fr.openfoodfacts.org/)
 
