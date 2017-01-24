@@ -13,8 +13,9 @@ import $ from 'jquery';
 import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
 import Toggle from 'material-ui/Toggle';
-const APIWunderlist = '';
-import image_downloader from 'image-downloader';
+
+const APISecret = '';
+const APICliendID = '';
 
 var CourseList = React.createClass({
     getInitialState: function(){
@@ -32,56 +33,16 @@ var CourseList = React.createClass({
     },
     loadWunderlist(){
 
-
-    // $.ajaxSetup({
-    //     headers : {
-    //         'Content-Type': 'image/png'
-    //     }
-    // });
-    //  $.getJSON('https://static.openfoodfacts.org/images/products/327/408/000/5003/front_fr.20.200.jpg', function(data) { alert("Success"); console.log("getWunderlist",data); });
-
-    // $.post( "https://a.wunderlist.com/api/v1/lists", { title: "list test" })
-    //     .done(( data)  => {
-    //         console.log( "Data Loaded: " + JSON.stringify(data) );
-    //     })
-    //     .fail(function(data){
-    //         console.log(data);
-    //     });
-
-        // $.ajax({
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     'type': 'GET',
-        //     'url':  "https://static.openfoodfacts.org/images/products/327/408/000/5003/front_fr.20.200.jpg",
-        //     'success': (data) =>{
-        //         console.log(data);
-        //     }
-        // });
-        //
-        // var tmpImg = new Image();
-        // console.log(tmpImg);
-        // var orgWidth;
-        // var orgHeight;
-        // tmpImg.src="https://static.openfoodfacts.org/images/products/327/408/000/5003/front_fr.20.200.jpg"; //or  document.images[i].src;
-        // $(tmpImg).one('load',function(){
-        //     orgWidth = tmpImg.width;
-        //     orgHeight = tmpImg.height;
-        //     console.log(tmpImg.size);
-        // });
-
-
             $.ajax({
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
-                    'X-Client-ID': '5764457c678b01bd15f5',
+                    'X-Access-Token': APISecret,
+                    'X-Client-ID': APICliendID,
                 },
                 'type': 'POST',
                 'url':  "https://a.wunderlist.com/api/v1/lists",
-                'data': JSON.stringify({ title: "list test 2" }),
+                'data': JSON.stringify({ title: "Course Liste" }),
                 'dataType': 'json',
                 'success': (data) => {
                     console.log(data.id);
@@ -89,8 +50,8 @@ var CourseList = React.createClass({
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json',
-                            'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
-                            'X-Client-ID': '5764457c678b01bd15f5',
+                            'X-Access-Token': APISecret,
+                            'X-Client-ID': APICliendID,
                         },
                         'type': 'POST',
                         'url':  "https://a.wunderlist.com/api/v1/memberships",
@@ -106,8 +67,8 @@ var CourseList = React.createClass({
                                     headers: {
                                         'Accept': 'application/json',
                                         'Content-Type': 'application/json',
-                                        'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
-                                        'X-Client-ID': '5764457c678b01bd15f5',
+                                        'X-Access-Token': APISecret,
+                                        'X-Client-ID': APICliendID,
                                     },
                                     'type': 'POST',
                                     'url':  "https://a.wunderlist.com/api/v1/tasks",
@@ -119,8 +80,8 @@ var CourseList = React.createClass({
                                             headers: {
                                                 'Accept': 'application/json',
                                                 'Content-Type': 'application/json',
-                                                'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
-                                                'X-Client-ID': '5764457c678b01bd15f5',
+                                                'X-Access-Token': APISecret,
+                                                'X-Client-ID': APICliendID,
                                             },
                                             'type': 'POST',
                                             'url':  "https://a.wunderlist.com/api/v1/notes",

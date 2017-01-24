@@ -8,29 +8,19 @@ var $ = require('jquery');
 var Paging = require('./Paging');
 var RenderProducts = require('./RenderProducts');
 var Country = require('./Country');
-// import {CourseList} from './CourseList';
 require('./App.css');
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
-import FlatButton from 'material-ui/FlatButton';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {deepOrange500} from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import CircularProgress from 'material-ui/CircularProgress';
-import TextField from 'material-ui/TextField';
 import ActionShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
 
-// import CourseList from'./CourseList';
 import CourseList from './CourseList';
 import AppBar from 'material-ui/AppBar';
 import Snackbar from 'material-ui/Snackbar';
 
-var Loader = require('react-loaders').Loader;
+// var Loader = require('react-loaders').Loader;
 
 
 var Engine = React.createClass({
@@ -72,26 +62,14 @@ var Engine = React.createClass({
         this.setState({pages: page});
         this.loadData(this.state.search, page, this.state.productsPerPage,this.state.storeChoose);
     },
-    // handleStoreChange(string){
-    //     console.log("magasing", string);
-    //     var store = string.target.value;
-    //     this.setState({pages: 1});
-    //     // this.setState({storeChoose: string.target.value});
-    //     this.setState({storeChoose: store}, function(){
-    //         console.log("CALLBACK ?",this.state.storeChoose === store); // true
-    //         if(this.state.storeChoose === store){
-    //             this.loadData(this.state.search, this.state.pages, this.state.productsPerPage, this.state.storeChoose);
-    //         }
-    //     }.bind(this));
-    // },
     handleStoreChange: function handleChange(event, index, value) {
-        console.log(value);
-        console.log("magasing", value);
+        // console.log(value);
+        // console.log("magasing", value);
         var store = value;
         this.setState({pages: 1});
         // this.setState({storeChoose: string.target.value});
         this.setState({storeChoose: store}, function(){
-            console.log("CALLBACK ?",this.state.storeChoose === store); // true
+            // console.log("CALLBACK ?",this.state.storeChoose === store); // true
             if(this.state.storeChoose === store){
                 this.loadData(this.state.search, this.state.pages, this.state.productsPerPage, this.state.storeChoose);
             }
@@ -178,23 +156,17 @@ var Engine = React.createClass({
 
     },
     loadStore(){
-        return $.getJSON(
-            'https://world.openfoodfacts.org/stores.json')
-            .then((data) =>{
-            this.setState({stores: data});
-                console.log("callback des stores ", data);
-            }
-        );
+        // return $.getJSON(
+        //     'https://world.openfoodfacts.org/stores.json')
+        //     .then((data) =>{
+        //     this.setState({stores: data});
+        //         console.log("callback des stores ", data);
+        //     }
+        // );
     },
     loadWunderlist(){
 
-        // $.ajaxSetup({
-        //     headers : {
-        //         'X-Access-Token': '0152bda4413acc6044f24e11736657839d6318fc5155bf917d64ecd1ed6c',
-        //         'X-Client-ID': '5764457c678b01bd15f5',
-        //     }
-        // });
-        // $.getJSON('https://a.wunderlist.com/api/v1/lists/251762132', function(data) { alert("Success"); console.log("getWunderlist",data); });
+
 
     },
     handleTouchShop(event){
@@ -244,13 +216,11 @@ var Engine = React.createClass({
                   onRightIconButtonTouchTap={this.handleTouchShop}
               />
 
-              {/*{console.log("search"+ this.state.search, "Page " + this.state.pages)}*/}
               <div>
               <div className="header">
                   <h1>Courses Listes</h1>
                   <CourseList product={this.state.shopProducts} onDelete={this.handleShopProductDelete} />
                   <i>Périmètre de la recherche : {this.state.country}</i>
-                  {/*<GetProducts search={this.state.search} onLoad={this.handleLoad}/>*/}
                   <Search onSubmit={this.handleSearchSubmit} />
                   <div>{this.renderStores()}</div>
                   <Country onChange={this.handleCountryChange} country={this.state.country}/>
