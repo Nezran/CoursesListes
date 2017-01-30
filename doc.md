@@ -1,8 +1,21 @@
+Test Markdown document
+======================
+
+Text
+----
+
+![GitHub Logo](https://facebook.github.io/react/img/logo.svg)
+Format: ![Alt Text](url)
+
+
 # React
+
+Constitué de composants (components)
 
 ## JSX
 
 JSX -> javascript à compiler
+
 ```
 var myVar = <p>Hello</p>;
 var myArray ={
@@ -15,6 +28,7 @@ var myArray ={
 ### JSX Attribute
 
 a name -> equals sign -> value
+
 ```
 my-attribute="myattribute-value"
 var panda = <img src="images/panda.jpg" alt="panda" width="500px" height="500px" />;
@@ -32,12 +46,12 @@ var myDiv = (
 );
 ```
 
-**Tout les éléments doivent html doivent être dans un conteneur**
+Tout les éléments doivent html doivent être dans un conteneur
 **Balise autofermée, obligatoire**
 
 
 ## ReactDOM
-librairies
+Librairies pour afficher un composants React
 
 ```
 ReactDOM.render(
