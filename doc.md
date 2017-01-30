@@ -4,8 +4,8 @@ Test Markdown document
 Text
 ----
 
-![GitHub Logo](https://facebook.github.io/react/img/logo.svg)
-Format: ![Alt Text](url)
+![React Logo](https://facebook.github.io/react/img/logo.svg)
+
 
 
 # React
