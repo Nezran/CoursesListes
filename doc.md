@@ -1,20 +1,33 @@
-Test Markdown document
-======================
+Documentation pour React
+------------------------------
 
-Text
-----
+- Mickaël Lacombe
+- 2017
+- Syntaxe ECMA 5 et ECMA 6
+- React version ^15.4.1
+
+Liens à retenir
+
+- http://reactpatterns.com/#layout-component
+- http://egorsmirnov.me/2015/05/22/react-and-es6-part1.html
+- https://babeljs.io/blog/2015/06/07/react-on-es6-plus
+
 
 ![React Logo](https://facebook.github.io/react/img/logo.svg)
 
 
-
 # React
 
+Framework Javascript de Facebook
 Constitué de composants (components)
 
-## JSX
-
+### JSX
 JSX -> javascript à compiler
+
+Tout les éléments doivent html doivent être dans un conteneur
+**Balise autofermée, obligatoire**
+
+a name -> equals sign -> value
 
 ```
 var myVar = <p>Hello</p>;
@@ -23,17 +36,9 @@ var myArray ={
     content : <p>Somes contents</p>
 
 }
-```
-
-### JSX Attribute
-
-a name -> equals sign -> value
-
-```
 my-attribute="myattribute-value"
 var panda = <img src="images/panda.jpg" alt="panda" width="500px" height="500px" />;
 ```
-
 
 **Multiline**
 
@@ -45,9 +50,6 @@ var myDiv = (
     </div>
 );
 ```
-
-Tout les éléments doivent html doivent être dans un conteneur
-**Balise autofermée, obligatoire**
 
 
 ## ReactDOM
@@ -64,15 +66,6 @@ React va insérer l'html dans l'élément app
 
 Insérer deux fois l'instruction ne changera rien
 
-```
-// This will add "Hello world" to the screen:
-
-ReactDOM.render(hello, document.getElementById('app'));
-
-// This won't do anything at all:
-
-ReactDOM.render(hello, document.getElementById('app'));
-```
 
 ## Evenement
 
@@ -95,7 +88,7 @@ var kitty = (
 
 3 types
 
-## IF bourrin
+### IF bourrin
 
 ```
 if (user.age >= drinkingAge) {
@@ -147,7 +140,30 @@ var tasty = (
 ```
 
 # Components
+
+Doit toujours posséder une méthode render
+
+ECMA 5
+```
+var Photo = React.createClass({
+  handleDoubleTap: function(e) { … },
+  render: function() { … },
+});
+```
+
+ECMA 6
+```
+class Photo extends React.Component {
+  handleDoubleTap(e) { … }
+  render() { … }
+}
+```
+
+
+
 ## Props
+On peut considérer le props comme les paramètres envoyés à une fonction.
+
 A React component should use props to store information that can be changed, but can only be changed by a different component.
 
 Passer des arguments
@@ -156,7 +172,8 @@ Passer des arguments
 <Greeting name="Frarthur" town="Flundon" age={2} haunted={false} />
 ```
 Passer un objet`au props
-```
+
+```js
  talk: function () {
     for (var speech = '', i = 0; i < 10000; i++) {
       speech += 'blah ';
@@ -171,7 +188,8 @@ Passer un objet`au props
 
 Props par default
 
-```
+ECMA 5
+```js
 var Button = React.createClass({
   getDefaultProps: function (){
     return {text: 'I am a button'}
@@ -184,6 +202,23 @@ var Button = React.createClass({
     );
   }
 });
+```
+
+ECMA 6 + proptypes
+
+```js
+class Video extends React.Component {
+  static defaultProps = {
+    autoPlay: false,
+    maxLoops: 10,
+  }
+  static propTypes = {
+    autoPlay: React.PropTypes.bool.isRequired,
+    maxLoops: React.PropTypes.number.isRequired,
+    posterFrameSrc: React.PropTypes.string.isRequired,
+    videoSrc: React.PropTypes.string.isRequired,
+  }  
+}
 ```
 
 ## Props.children
@@ -225,27 +260,35 @@ var List = React.createClass({
 
 ```
 ## Importer une fonction / component d'un fichier
+
+ECMA 5
 ```
 module.exports = List;
 ```
 
+ECMA 6
+```
+export default List;
+```
+
 ## State
-A React component should use state to store information that the component itself can change.
 
-State par défaut
+Un composant React devrait utiliser les states pour stocker des informations que le composant changera lui-même
 
-Appeler un state
-
-Modifier un state
 
 **Ne pas appeler this.setState dans un function render**
 
-Any time that you call this.setState, this.setState AUTOMATICALLY calls render as soon as the state has changed.
+Chaque fois que this.setState est appelé, la méthode du composant render est appelée dès que le state a été modifié.
 
+ECMA 5
 ```
-  getInitialState: function () {
-    return { mood: 'decent' };
-  },
+var Video = React.createClass({
+  getInitialState: function() {
+    return {
+      mood: 'value',
+    };
+  }
+});  
   render: function(){
       return (
         <h1>
@@ -260,14 +303,137 @@ Any time that you call this.setState, this.setState AUTOMATICALLY calls render a
       }
  ```
  
+ ECMA 6
+ 
+```
+class Video extends React.Component {
+state = {
+  mood: 'value',
+}
+render(){
+    return(
+          <h1>
+             I'm feeling {this.state.mood}!
+           </h1>
+    )
+}
+moodSet = () => {
+  this.setState({
+    moodSet: newState
+  });
+}
+}
+
+```
+ # LifeCycle
+ 
+ ##Mounting
+ These methods are called when an instance of a component is being created and inserted into the DOM:
+ 
+ - constructor()
+ - componentWillMount()
+ - render()
+ - componentDidMount()
+ 
+ ##Updating
+ An update can be caused by changes to props or state. These methods are called when a component is being re-rendered:
+ 
+ componentWillReceiveProps()
+ shouldComponentUpdate()
+ componentWillUpdate()
+ render()
+ componentDidUpdate()
+ ##Unmounting
+ This method is called when a component is being removed from the DOM:
+ 
+ componentWillUnmount()
+ 
+ ### componentWillMount()
+ 
+ Travail d'un constructeur
+ 
+ **Uniquement lors de la première fois !**
+ 
+ ECMA5
+ ```
+ var EmbedModal = React.createClass({
+   componentWillMount: function() { … },
+ });
+ ```
+ ECMA 6
+ ```
+ class EmbedModal extends React.Component {
+   constructor(props) {
+     super(props);
+     // Méthode du componentWillMount vont ici
+   }
+ }
+ ```
+ ### componentDidMount()
+ La fonction sera appelée quand l'HTML du render aura finit d'etre généré.
+ 
+ ### componentWillReceiveProps()
+ La fonction est appelé quand le composant reçoit un props APRES avoir effectué son 1er render
+ 
+ ```js
+ var React = require('react');
+ 77
+ var Example = React.createClass({
+   componentWillReceiveProps: function (nextProps) {
+     alert("Check out the new props.text that "
+     	+ "I'm about to get:  " + nextProps.text);
+   }, 
+ 
+   render: function () {
+     return <h1>{this.props.text}</h1>;
+   }
+ });
+ 
+ 
+ // The first render won't trigger
+ // componentWillReceiveProps:
+ ReactDOM.render(
+ 	<Example text="Hello world" />,
+ 	document.getElementById('app')
+ );
+ 
+ // After the first render, 
+ // subsequent renders will trigger
+ // componentWillReceiveProps:
+ setTimeout(function () {
+ 	ReactDOM.render(
+ 		<Example text="Hello world" />,
+ 		document.getElementById('app')
+ 	);
+ }, 1000);
+ ```
+ 
+ # Style
+ 
+ ```js
+ <h1 style={{ color: 'red' }}>Hello world</h1>
+ ```
+ 
+ En react les styles, pas de tiret (-) on colle les attributs...
+ 
+ 
+ ```js
+ var styles = {
+   marginTop:       "20px",
+   backgroundColor: "green"
+ };
+ ```
+ 
 # Pattern
 
-Our programming pattern uses two React components: a stateful component, and a stateless component. "Stateful" describes any component that has a getInitialState function; "stateless" describes any component that does not.
+Our programming pattern uses two React components: a stateful component, and a stateless component.
+"Stateful" describes any component that has a getInitialState function.
+"stateless" describes any component that does not.
 
 ## From child to parent class
  your first React programming pattern: a stateful, parent component passes down a prop to a stateless, child component.
 Parent
-you learned that lesson 1's pattern is actually part of a larger pattern: a stateful, parent component passes down an event handler to a stateless, child component. The child component then uses that event handler to update its parent's state.
+A stateful, parent component passes down an event handler to a stateless, child component. The child component then uses that event handler to update its parent's state.
 ```js
 var Parent = React.createClass({
   getInitialState: function () {
@@ -311,27 +477,8 @@ var Child = React.createClass({
 });
 ```
 
-# Style
-```
-<h1 style={{ color: 'red' }}>Hello world</h1>
-```
-
-## Accéder au this de la class dans une function boucle
 
 
-```
- this.state.products.map(function (item){
-      return <RenderProducts onClick={this.onClickProduct} products={item}/>
- }.bind(this))
-```
-### OU ECMA 6
-
-
-```
-var.map((key) => {
-            // do stuff
-});
-```
 ## Stateless Functional Components
 
 ```
@@ -362,4 +509,51 @@ function MyComponentClass (props) {
 }
 
 
+```
+
+
+
+# Tips React / Javascript
+
+## Accéder au this de la class dans une function
+
+
+```js
+ this.state.products.map(function (item){
+      return <RenderProducts onClick={this.onClickProduct} products={item}/>
+ }.bind(this))
+```
+
+Ou indiquer dans le constructor ou componentWillMount
+
+
+
+```js
+class PostInfo extends React.Component {
+  constructor(props) {
+    super(props);
+    // Manually bind this method to the component instance...
+    this.handleOptionsButtonClick = this.handleOptionsButtonClick.bind(this);
+  }
+  handleOptionsButtonClick(e) {
+    // ...to ensure that 'this' refers to the component instance here.
+    this.setState({showOptionsModal: true});
+  }
+}
+```
+
+### OU ECMA 6
+La fonction n'écrase pas le this de la class
+
+Fonction anonyme
+```js
+var.map((key) => {
+            // do stuff
+});
+```
+Fonction nommée
+```js
+handleOptionsButtonClick = (params) => {
+    this.setState({showOptionsModal: true});
+  }
 ```
