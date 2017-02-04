@@ -507,7 +507,16 @@ function MyComponentClass (props) {
 	var title = props.title;
   return <h1>{title}</h1>;
 }
-
+```
+Steteless Function with props
+```
+function Navigation({ items }) {
+  return (
+    <nav><ul>{items.map(x => <li>{x.text}</li>}</ul></nav>;
+  );
+}
+Navigation.propTypes = { items: PropTypes.array.isRequired };
+ 
 
 ```
 
