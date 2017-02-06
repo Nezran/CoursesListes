@@ -377,7 +377,7 @@ moodSet = () => {
  
  ```js
  var React = require('react');
- 77
+ 
  var Example = React.createClass({
    componentWillReceiveProps: function (nextProps) {
      alert("Check out the new props.text that "
@@ -407,6 +407,64 @@ moodSet = () => {
  	);
  }, 1000);
  ```
+ 
+ ### shouldComponentUpdate()
+ 
+ ```js
+ shouldComponentUpdate: function (nextProps, nextState) {
+     if ((this.props.text == nextProps.text) && 
+       (this.state.subtext == nextState.subtext)) {
+       alert("Props and state haven't changed, so I'm not gonna update!");
+       return false;
+     } else {
+       alert("Okay fine I will update.")
+       return true;
+     }
+   },
+ ```
+ 
+ ### componentWillUpdate ()
+ 
+You cannot call this.setState from the body of componentWillUpdate! Which begs the question, why would you use it?
+ 
+The main purpose of componentWillUpdate is to interact with things outside of the React architecture.
+If you need to do non-React setup before a component renders, such as checking the window size or interacting with an API,
+then componentWillUpdate is a good place to do that.
+
+
+ ```
+    componentWillUpdate: function(nextProps, nextState){
+        if(document.body.style.background != yellow && this.state.highest >= 950*1000){
+          document.body.style.background = yellow;
+        }else if(!this.props.game && nextProps.game){
+          document.body.style.background = 'white';
+        }
+      }
+ 
+ ```
+ 
+ 
+ 
+ 
+ ### componentDidUpdate ()
+ When a component instance updates, componentDidUpdate gets called after any rendered HTML has finished loading.
+ componentDidUpdate automatically gets passed two arguments: prevProps and prevState. prevProps and prevState are references to the component's props and state before the current updating period began. You can compare them to the current props and state.
+  
+  ```
+  componentDidUpdate: function (prevProps, prevState) {
+      alert('Component is done rendering!');
+    },
+  ```
+  
+  componentDidUpdate is usually used for interacting with things outside of the React environment, like the browser or APIs. It's similar to componentWillUpdate in that way, except that it gets called after render instead of before.
+ 
+ ### componentWillUnmount ()
+ 
+ componentWillUnmount is the only unmounting lifecycle method!
+ 
+ componentWillUnmount gets called right before a component is removed from the DOM.
+  If a component initiates any methods that require cleanup, then componentWillUnmount is where you should put that cleanup.
+ 
  
  # Style
  
