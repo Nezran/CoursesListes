@@ -565,7 +565,16 @@ function MyComponentClass (props) {
 	var title = props.title;
   return <h1>{title}</h1>;
 }
-
+```
+Steteless Function with props
+```
+function Navigation({ items }) {
+  return (
+    <nav><ul>{items.map(x => <li>{x.text}</li>}</ul></nav>;
+  );
+}
+Navigation.propTypes = { items: PropTypes.array.isRequired };
+ 
 
 ```
 
@@ -615,3 +624,22 @@ handleOptionsButtonClick = (params) => {
     this.setState({showOptionsModal: true});
   }
 ```
+## Three dots
+As you know  ... are called spread operator which the name represents it allows an expression to be expanded.
+
+var parts = ['two', 'three'];
+var numbers = ['one', ...parts, 'four', 'five']; // ["one", "two", "three", "four", "five"]
+
+
+//just assume we have an object like this:
+var person= {
+    name: 'Alex',
+    age: 35 
+}
+**This:**
+
+<Modal {...person} title='Modal heading' animation={false} />
+**is equal to**
+
+<Modal name={person.name} age={person.age} title='Modal heading' animation={false} />
+So in short, it's a neat short-cut, we can say.
