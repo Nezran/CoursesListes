@@ -638,8 +638,12 @@ var person= {
 }
 **This:**
 
+```
 <Modal {...person} title='Modal heading' animation={false} />
+```
 **is equal to**
 
+```
 <Modal name={person.name} age={person.age} title='Modal heading' animation={false} />
+```
 So in short, it's a neat short-cut, we can say.
