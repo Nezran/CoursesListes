@@ -647,3 +647,22 @@ var person= {
 <Modal name={person.name} age={person.age} title='Modal heading' animation={false} />
 ```
 So in short, it's a neat short-cut, we can say.
+
+Passer des props au children
+
+export default class MovieBrowser extends React.Component {
+  render() {
+    const currentPlayingTitle = 'Mad Max: Fury Road';
+    const childrenWithExtraProp = React.Children.map(this.props.children, child => {
+      return React.cloneElement(child, {
+        isPlaying: child.props.title === currentPlayingTitle
+      });
+    });
+
+    return (
+      <div className="movie-browser">
+        {childrenWithExtraProp}
+      </div>      
+    );
+  }
+}
