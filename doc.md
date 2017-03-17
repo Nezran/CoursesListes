@@ -11,6 +11,7 @@ Liens à retenir
 - http://reactpatterns.com/#layout-component
 - http://egorsmirnov.me/2015/05/22/react-and-es6-part1.html
 - https://babeljs.io/blog/2015/06/07/react-on-es6-plus
+- http://buildwithreact.com/article/component-lifecycle
 
 
 ![React Logo](https://facebook.github.io/react/img/logo.svg)
