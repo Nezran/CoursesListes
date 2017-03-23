@@ -303,7 +303,7 @@ var Video = React.createClass({
     return {
       mood: 'value',
     };
-  }
+  },
 
   render: function(){
       return (
@@ -327,7 +327,7 @@ var Video = React.createClass({
 class Video extends React.Component {
 state = {
   mood: 'value',
-}
+};
 render(){
     return(
           <h1>
