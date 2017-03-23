@@ -326,17 +326,20 @@ moodSet = () => {
 }
 
 ```
- # LifeCycle
+
+# LifeCycle
  
- ##Mounting
- These methods are called when an instance of a component is being created and inserted into the DOM:
+##Mounting
+ 
+These methods are called when an instance of a component is being created and inserted into the DOM:
  
  - constructor()
  - componentWillMount()
  - render()
  - componentDidMount()
  
- ##Updating
+##Updating
+ 
  An update can be caused by changes to props or state. These methods are called when a component is being re-rendered:
  
  componentWillReceiveProps()
@@ -347,9 +350,10 @@ moodSet = () => {
  ##Unmounting
  This method is called when a component is being removed from the DOM:
  
- componentWillUnmount()
+componentWillUnmount()
  
- ### componentWillMount()
+
+### componentWillMount()
  
  Travail d'un constructeur
  
@@ -370,10 +374,12 @@ moodSet = () => {
    }
  }
  ```
- ### componentDidMount()
+### componentDidMount()
+ 
  La fonction sera appelée quand l'HTML du render aura finit d'etre généré.
  
- ### componentWillReceiveProps()
+### componentWillReceiveProps()
+ 
  La fonction est appelé quand le composant reçoit un props APRES avoir effectué son 1er render
  
  ```js
@@ -409,7 +415,7 @@ moodSet = () => {
  }, 1000);
  ```
  
- ### shouldComponentUpdate()
+### shouldComponentUpdate()
  
  ```js
  shouldComponentUpdate: function (nextProps, nextState) {
@@ -424,7 +430,7 @@ moodSet = () => {
    },
  ```
  
- ### componentWillUpdate ()
+### componentWillUpdate ()
  
 You cannot call this.setState from the body of componentWillUpdate! Which begs the question, why would you use it?
  
@@ -447,7 +453,8 @@ then componentWillUpdate is a good place to do that.
  
  
  
- ### componentDidUpdate ()
+### componentDidUpdate ()
+ 
  When a component instance updates, componentDidUpdate gets called after any rendered HTML has finished loading.
  componentDidUpdate automatically gets passed two arguments: prevProps and prevState. prevProps and prevState are references to the component's props and state before the current updating period began. You can compare them to the current props and state.
   
@@ -459,7 +466,7 @@ then componentWillUpdate is a good place to do that.
   
   componentDidUpdate is usually used for interacting with things outside of the React environment, like the browser or APIs. It's similar to componentWillUpdate in that way, except that it gets called after render instead of before.
  
- ### componentWillUnmount ()
+### componentWillUnmount ()
  
  componentWillUnmount is the only unmounting lifecycle method!
  
@@ -467,7 +474,7 @@ then componentWillUpdate is a good place to do that.
   If a component initiates any methods that require cleanup, then componentWillUnmount is where you should put that cleanup.
  
  
- # Style
+# Style
  
  ```js
  <h1 style={{ color: 'red' }}>Hello world</h1>
@@ -490,9 +497,11 @@ Our programming pattern uses two React components: a stateful component, and a s
 "stateless" describes any component that does not.
 
 ## From child to parent class
+
  your first React programming pattern: a stateful, parent component passes down a prop to a stateless, child component.
 Parent
 A stateful, parent component passes down an event handler to a stateless, child component. The child component then uses that event handler to update its parent's state.
+
 ```js
 var Parent = React.createClass({
   getInitialState: function () {
@@ -611,6 +620,7 @@ class PostInfo extends React.Component {
 ```
 
 ### OU ECMA 6
+
 La fonction n'écrase pas le this de la class
 
 Fonction anonyme
@@ -625,7 +635,9 @@ handleOptionsButtonClick = (params) => {
     this.setState({showOptionsModal: true});
   }
 ```
+
 ## Three dots
+
 As you know  ... are called spread operator which the name represents it allows an expression to be expanded.
 
 var parts = ['two', 'three'];
@@ -637,11 +649,13 @@ var person= {
     name: 'Alex',
     age: 35 
 }
+
 **This:**
 
 ```
 <Modal {...person} title='Modal heading' animation={false} />
 ```
+
 **is equal to**
 
 ```
