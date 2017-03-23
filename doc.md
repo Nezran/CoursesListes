@@ -327,7 +327,7 @@ moodSet = () => {
 
 ```
 
-# LifeCycle
+#LifeCycle
  
 ##Mounting
  
