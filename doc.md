@@ -30,7 +30,8 @@ Tout les éléments doivent html doivent être dans un conteneur
 
 a name -> equals sign -> value
 
-```
+```js
+
 var myVar = <p>Hello</p>;
 var myArray ={
     title : <h1>Hi</h1>,
@@ -43,7 +44,8 @@ var panda = <img src="images/panda.jpg" alt="panda" width="500px" height="500px"
 
 **Multiline**
 
-```
+```js
+
 var myDiv = (
     <div className="ClassCss">
         <h1>Hello world</h1>
@@ -56,7 +58,8 @@ var myDiv = (
 ## ReactDOM
 Librairies pour afficher un composants React
 
-```
+```js
+
 ReactDOM.render(
 	<h1>Render me!</h1>,
   document.getElementById('app')
@@ -72,7 +75,8 @@ Insérer deux fois l'instruction ne changera rien
 
 CamelCase !
 
-```
+```js
+
 function makeDoggy (e) {
   e.target.setAttribute('src', 'https://s3.amazonaws.com/codecademy-content/courses/React/react_photo-puppy.jpeg');
 }
@@ -91,7 +95,8 @@ var kitty = (
 
 ### IF bourrin
 
-```
+```js
+
 if (user.age >= drinkingAge) {
   var message = (
     <h1>
@@ -109,7 +114,8 @@ if (user.age >= drinkingAge) {
 
 ### IF ternaire
 
-```
+```js
+
 var age = 20;
 var pics = {
   kitty: 'react_photo-kitty.jpg',
@@ -127,7 +133,8 @@ var img = (
 
 ### IF && operator
 
-```
+```js
+
 var age = 18;
 var tasty = (
   <ul>
@@ -145,7 +152,8 @@ var tasty = (
 Doit toujours posséder une méthode render
 
 ECMA 5
-```
+```js
+
 var Photo = React.createClass({
   handleDoubleTap: function(e) { … },
   render: function() { … },
@@ -153,7 +161,8 @@ var Photo = React.createClass({
 ```
 
 ECMA 6
-```
+```js
+
 class Photo extends React.Component {
   handleDoubleTap(e) { … }
   render() { … }
@@ -168,13 +177,15 @@ On peut considérer le props comme les paramètres envoyés à une fonction.
 A React component should use props to store information that can be changed, but can only be changed by a different component.
 
 Passer des arguments
-```
+```js
+
 <Greeting myInfo={["top", "secret", "lol"]} />
 <Greeting name="Frarthur" town="Flundon" age={2} haunted={false} />
 ```
 Passer un objet`au props
 
 ```js
+
  talk: function () {
     for (var speech = '', i = 0; i < 10000; i++) {
       speech += 'blah ';
@@ -226,7 +237,8 @@ class Video extends React.Component {
 
 If a component has more than one child between its JSX tags, then this.props.children will return those children in an array. However, if a component has only one child, then this.props.children will return the single child, not wrapped in an array.
 
-```
+```js
+
 var App = React.createClass({
   render: function () {
     return (
@@ -260,15 +272,18 @@ var List = React.createClass({
 
 
 ```
+
 ## Importer une fonction / component d'un fichier
 
 ECMA 5
-```
+```js
+
 module.exports = List;
 ```
 
 ECMA 6
-```
+```js
+
 export default List;
 ```
 
@@ -282,7 +297,8 @@ Un composant React devrait utiliser les states pour stocker des informations que
 Chaque fois que this.setState est appelé, la méthode du composant render est appelée dès que le state a été modifié.
 
 ECMA 5
-```
+```js
+
 var Video = React.createClass({
   getInitialState: function() {
     return {
@@ -306,7 +322,8 @@ var Video = React.createClass({
  
  ECMA 6
  
-```
+```js
+
 class Video extends React.Component {
 state = {
   mood: 'value',
@@ -360,13 +377,15 @@ componentWillUnmount()
  **Uniquement lors de la première fois !**
  
  ECMA5
- ```
+ ```js
+
  var EmbedModal = React.createClass({
    componentWillMount: function() { … },
  });
  ```
  ECMA 6
- ```
+ ```js
+
  class EmbedModal extends React.Component {
    constructor(props) {
      super(props);
@@ -439,7 +458,8 @@ If you need to do non-React setup before a component renders, such as checking t
 then componentWillUpdate is a good place to do that.
 
 
- ```
+ ```js
+
     componentWillUpdate: function(nextProps, nextState){
         if(document.body.style.background != yellow && this.state.highest >= 950*1000){
           document.body.style.background = yellow;
@@ -458,7 +478,8 @@ then componentWillUpdate is a good place to do that.
  When a component instance updates, componentDidUpdate gets called after any rendered HTML has finished loading.
  componentDidUpdate automatically gets passed two arguments: prevProps and prevState. prevProps and prevState are references to the component's props and state before the current updating period began. You can compare them to the current props and state.
   
-  ```
+  ```js
+
   componentDidUpdate: function (prevProps, prevState) {
       alert('Component is done rendering!');
     },
@@ -547,7 +568,8 @@ var Child = React.createClass({
 
 ## Stateless Functional Components
 
-```
+```js
+
 // Normal way to display a prop:
 var MyComponentClass = React.createClass({
   render: function () {
@@ -577,7 +599,8 @@ function MyComponentClass (props) {
 
 Steteless Function with props
 
-```
+```js
+
 function Navigation({ items }) {
   return (
     <nav><ul>{items.map(x => <li>{x.text}</li>}</ul></nav>;
@@ -654,13 +677,15 @@ var person= {
 
 **This:**
 
-```
+```js
+
 <Modal {...person} title='Modal heading' animation={false} />
 ```
 
 **is equal to**
 
-```
+```js
+
 <Modal name={person.name} age={person.age} title='Modal heading' animation={false} />
 ```
 
@@ -668,6 +693,7 @@ So in short, it's a neat short-cut, we can say.
 
 Passer des props au children
 
+```js
 export default class MovieBrowser extends React.Component {
   render() {
     const currentPlayingTitle = 'Mad Max: Fury Road';
@@ -684,3 +710,4 @@ export default class MovieBrowser extends React.Component {
     );
   }
 }
+```
