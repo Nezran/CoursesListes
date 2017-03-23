@@ -96,7 +96,6 @@ var kitty = (
 ### IF bourrin
 
 ```js
-
 if (user.age >= drinkingAge) {
   var message = (
     <h1>
@@ -106,7 +105,7 @@ if (user.age >= drinkingAge) {
 } else {
   var message = (
     <h1>
-      Hey, check out these earrings I got at Claire's!
+      Hey, check out these earrings
     </h1>
   );
 }
@@ -305,7 +304,7 @@ var Video = React.createClass({
       mood: 'value',
     };
   }
-});  
+
   render: function(){
       return (
         <h1>
@@ -318,6 +317,7 @@ var Video = React.createClass({
           mood: 'foggy'
         });
       }
+ });  
  ```
  
  ECMA 6
