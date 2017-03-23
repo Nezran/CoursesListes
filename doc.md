@@ -327,9 +327,9 @@ moodSet = () => {
 
 ```
 
-#LifeCycle
+# LifeCycle
  
-##Mounting
+## Mounting
  
 These methods are called when an instance of a component is being created and inserted into the DOM:
  
@@ -338,7 +338,7 @@ These methods are called when an instance of a component is being created and in
  - render()
  - componentDidMount()
  
-##Updating
+## Updating
  
  An update can be caused by changes to props or state. These methods are called when a component is being re-rendered:
  
@@ -545,8 +545,6 @@ var Child = React.createClass({
 });
 ```
 
-
-
 ## Stateless Functional Components
 
 ```
@@ -576,7 +574,9 @@ function MyComponentClass (props) {
   return <h1>{title}</h1>;
 }
 ```
+
 Steteless Function with props
+
 ```
 function Navigation({ items }) {
   return (
@@ -629,7 +629,9 @@ var.map((key) => {
             // do stuff
 });
 ```
+
 Fonction nommée
+
 ```js
 handleOptionsButtonClick = (params) => {
     this.setState({showOptionsModal: true});
@@ -661,6 +663,7 @@ var person= {
 ```
 <Modal name={person.name} age={person.age} title='Modal heading' animation={false} />
 ```
+
 So in short, it's a neat short-cut, we can say.
 
 Passer des props au children
