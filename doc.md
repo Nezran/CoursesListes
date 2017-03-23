@@ -308,7 +308,7 @@ var Video = React.createClass({
   render: function(){
       return (
         <h1>
-          I'm feeling {this.state.mood}!
+          Im feeling {this.state.mood}!
         </h1>
       );
     },
@@ -331,7 +331,7 @@ state = {
 render(){
     return(
           <h1>
-             I'm feeling {this.state.mood}!
+             I\'m feeling {this.state.mood}!
            </h1>
     )
 }
