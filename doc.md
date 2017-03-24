@@ -711,3 +711,51 @@ export default class MovieBrowser extends React.Component {
   }
 }
 ```
+
+## Await arrow function, Promise in Javascript
+
+```js
+getTrelloMembers = async () => {
+            try{
+                let response = await Axios.get('url')
+                this.setState({data:response.data});
+            }catch(e){
+                console.log(e);
+            }
+    }
+ ```
+ 
+ is equal to
+ 
+ ```js
+ getTrelloMembers = () => {
+        Axios.get('url')
+            .then( (response) => {
+                this.setState({data:response.data});
+            })
+            .catch( (e) => {
+                console.log(e);
+            });
+    }
+```
+
+is equal to
+
+ ```js
+ return new Promise((resolve, reject) => {
+            Axios.post('url', {
+               data:data
+            })
+                .then(function (response) {
+                    if (response.status == 200) {
+                        resolve('Success!');
+                    }
+
+                }.bind(this))
+                .catch(function (error) {
+                    console.log(error);
+                    reject('Failure!');
+                }.bind(this));
+        });
+  ```
+
