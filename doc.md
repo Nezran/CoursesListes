@@ -661,6 +661,17 @@ handleOptionsButtonClick = (params) => {
   }
 ```
 
+Sans la syntaxe des fonctions fléchées 
+
+```js
+var a2 = a.map(function(s){ return s.length });
+```
+
+Avec, on a quelque chose de plus concis
+
+```js
+var a3 = a.map( s => s.length );
+```
 ## Three dots
 
 As you know  ... are called spread operator which the name represents it allows an expression to be expanded.
