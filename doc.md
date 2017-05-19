@@ -769,4 +769,16 @@ is equal to
                 }.bind(this));
         });
   ```
+  
+  Function function
+  
+   ```js
+export const generateNavigator = (screens, navigatorConfig) => 
+  StackNavigator(screens, navigatorConfig);
 
+const NavigatorView = (myArg, props) => {
+    const Navigator = generateNavigator(screens, myArg);
+    return (<Navigator screenProps={{ ...props }}/>);
+};
+
+  ```
